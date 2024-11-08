@@ -32,11 +32,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        
         <Style x:Key="FrameStyle" TargetType="Frame">
             <Setter Property="Background" Value="#FF2A3037"/>
-
         </Style>
 
                
