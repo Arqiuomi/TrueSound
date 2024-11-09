@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrueSound.view"
+        xmlns:model="clr-namespace:TrueSound.model"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         Title="OpenWindow" Height="600" Width="400"
         Background="#FF2A3037">
 
     <Window.Resources>
+        <model:User Password ="#####" Name ="Имя пользователя" x:Key="NewUser"/>
+        
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -52,7 +57,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid DataContext="{StaticResource NewUser}">
         <Grid.RowDefinitions>
             <RowDefinition Height="92*"/>
             <RowDefinition Height="81*"/>
@@ -64,19 +69,21 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" Grid.Row="1"
                    Text="Добро пожаловать в TrueSound!"  Height="37" Width="320"/>
-        <TextBox 
+        <TextBox x:Name="NameBox"
             Style="{DynamicResource txtStyle}" 
                  Grid.Row="2"
-                 Text="Имя пользователя" 
-            Height="40" Width="250"/>
-        <PasswordBox 
-            
+                 Text="{Binding Name}" 
+            Height="40" Width="250" GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" />
+
+        <PasswordBox x:Name="PassBox" 
             Style="{DynamicResource pswrdStyle}"
              Grid.Row="3" 
-             Height="40" Width="250" Password="######"/>
+             Height="40" Width="250" 
+
+            />
         <Button Content="Войти"  Grid.Row="4"
                 Style="{DynamicResource btnStyle}"
-                Height="40" Width="200"/>
+                Height="40" Width="200" Click="Button_Click"/>
         <Button Content="Зарегистрироваться" 
                 Style="{DynamicResource btnStyle}"
                 BorderBrush="Transparent"

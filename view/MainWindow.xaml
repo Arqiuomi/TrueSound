@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrueSound"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-
         Title="MainWindow" Height="600" Width="400">
     <Window.Resources>
         <Style x:Key="BtnStyle" TargetType="Button">

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace TrueSound.view
 {
     /// <summary>
@@ -22,6 +23,37 @@ namespace TrueSound.view
         public OpenWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            model.User user = (model.User)this.Resources["NewUser"];
+            user.Password=PassBox.Password; //костыль
+            if (presenter.RegistrationChecker.checkReg(user.Name, user.Password))
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                //предупреждение, если введены неверные данные
+                MessageBox.Show("Проверьте имя пользователя и пароль","", MessageBoxButton.OK,MessageBoxImage.Hand);
+            }
+        }
+
+
+
+        private void NameBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (NameBox.Text == "Имя пользователя")
+                NameBox.Text = "";
+        }
+
+        private void NameBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (NameBox.Text == "")
+                NameBox.Text = "Имя пользователя";
         }
     }
 }
