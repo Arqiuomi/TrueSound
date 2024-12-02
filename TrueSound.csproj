@@ -11,11 +11,11 @@
 
   <ItemGroup>
     <None Remove="nots.png" />
-    <None Remove="view\library.png" />
-    <None Remove="view\nots.png" />
-    <None Remove="view\settings.png" />
-    <None Remove="view\user.png" />
-    <None Remove="view\vinyl.png" />
+    <None Remove="View\library.png" />
+    <None Remove="View\nots.png" />
+    <None Remove="View\settings.png" />
+    <None Remove="View\user.png" />
+    <None Remove="View\vinyl.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -32,14 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="view\image\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="view\library.png" />
-    <Resource Include="view\settings.png" />
-    <Resource Include="view\user.png" />
-    <Resource Include="view\vinyl.png" />
+    <Resource Include="View\library.png" />
+    <Resource Include="View\settings.png" />
+    <Resource Include="View\user.png" />
+    <Resource Include="View\vinyl.png" />
   </ItemGroup>
 
   <ItemGroup>

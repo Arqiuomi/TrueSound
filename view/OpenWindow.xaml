@@ -32,6 +32,8 @@
             <Setter Property="BorderBrush" Value="Wheat"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
         </Style>
 
         <Style x:Key="pswrdStyle" TargetType="PasswordBox">
@@ -43,6 +45,8 @@
             <Setter Property="BorderBrush" Value="Wheat"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
         </Style>
 
         <Style x:Key="btnStyle" TargetType="Button">
@@ -73,13 +77,11 @@
             Style="{DynamicResource txtStyle}" 
                  Grid.Row="2"
                  Text="{Binding Name}" 
-            Height="40" Width="250" GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" />
+            GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" />
 
         <PasswordBox x:Name="PassBox" 
             Style="{DynamicResource pswrdStyle}"
              Grid.Row="3" 
-             Height="40" Width="250" 
-
             />
         <Button Content="Войти"  Grid.Row="4"
                 Style="{DynamicResource btnStyle}"

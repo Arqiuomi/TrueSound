@@ -26,7 +26,6 @@
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="HorizontalAlignment" Value="Right"/>
-            
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="Transparent"/>
@@ -35,7 +34,30 @@
                     <Setter Property="Background" Value="Transparent"/>
                 </Trigger>
             </Style.Triggers>
-            
+        </Style>
+            <Style x:Name="txtStyle" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Wheat"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Wheat"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="40"/>
+        </Style>
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Wheat"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Wheat"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="40"/>
         </Style>
     </Page.Resources>
 
@@ -58,7 +80,6 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="Edit"
                 Grid.Column="3"
-                    
                 Content="Изм." Width="27" Height="18"
                 />
             <Ellipse Grid.Column="1"
@@ -66,9 +87,16 @@
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="/view/user.png" Stretch="UniformToFill"/>
                 </Ellipse.Fill>
-
             </Ellipse>
-
         </Grid>
+
+        <TextBox x:Name="NameBox"
+            Text="Hi"
+            Grid.Row="1"
+            />
+        <Button Content="Сменить профиль" 
+                Style="{DynamicResource btnStyle}"
+                Grid.Row="5" Click="Button_Click" 
+                />
     </Grid>
 </Page>

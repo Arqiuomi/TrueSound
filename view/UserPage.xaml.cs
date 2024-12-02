@@ -24,5 +24,12 @@ namespace TrueSound.view
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow openWindow = new OpenWindow();
+            openWindow.Show();
+            Application.Current.Windows[0].Close();
+        }
     }
 }
