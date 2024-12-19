@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrueSound.view"
         xmlns:model="clr-namespace:TrueSound.model"
+        xmlns:vm="clr-namespace:TrueSound.ViewModel"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -60,7 +61,12 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
+    
+    <Window.DataContext>
+        <vm:OpenViewModel/>
+    </Window.DataContext>
 
+    
     <Grid DataContext="{StaticResource NewUser}">
         <Grid.RowDefinitions>
             <RowDefinition Height="92*"/>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrueSound.model;
 
 namespace TrueSound.view
 {
@@ -20,9 +21,15 @@ namespace TrueSound.view
     /// </summary>
     public partial class UserPage : Page
     {
-        public UserPage()
+        
+        public UserPage(User user)
         {
             InitializeComponent();
+            this.Resources["NewUser"] = user;
+            MessageBox.Show($"{user.Name}");
+            MessageBox.Show($"{((User)this.Resources["NewUser"]).Name}");
+            //NameBox.Text =user.Name;
+            NameBox.IsEnabled = false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

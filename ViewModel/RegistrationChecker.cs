@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TrueSound.model;
 
-namespace TrueSound.presenter
+namespace TrueSound.ViewModel
 {
     
     public class RegistrationChecker

@@ -18,10 +18,12 @@ namespace TrueSound
     {
         Config config = new Config();
         DB db;
-        public MainWindow()
+        User User {  get; set; }
+        public MainWindow(User user)
         {
-            db = new DB(config);
             InitializeComponent();
+            db = new DB(config); 
+            User = user;
      //       btn.Content = db.userNameInfo();
         }
 
@@ -38,9 +40,8 @@ namespace TrueSound
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
             PageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; //убираем стрелочки-навигации между страницами свитчера
-            UserPage userPage = new ();
+            UserPage userPage = new UserPage(User);
             pageSwitcher.Content=userPage;
-            //создай пэйдж с пользователем и передай сюда
         }
     }
 }
