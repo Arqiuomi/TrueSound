@@ -8,6 +8,7 @@ using TrueSound.model;
 namespace TrueSound.ViewModel
 {
     
+
     public class RegistrationChecker
     {
         static Config config =new();

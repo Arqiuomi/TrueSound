@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace TrueSound.Model
 {
-    public class OpenWindowModel
+    public class MainWindowModel
     {
         public string? Name { get; set; }
         public string? Password { get; set; }
 
-        public OpenWindowModel() 
+
+        public MainWindowModel() { }
+        public MainWindowModel(string Name, string Password) 
         {
         }
+
 
     }
 }

@@ -13,7 +13,6 @@
         Background="#FF2A3037">
 
     <Window.Resources>
-        <model:User Password ="#####" Name ="Имя пользователя" x:Key="NewUser"/>
         
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -66,8 +65,7 @@
         <vm:OpenViewModel/>
     </Window.DataContext>
 
-    
-    <Grid DataContext="{StaticResource NewUser}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="92*"/>
             <RowDefinition Height="81*"/>
@@ -82,16 +80,20 @@
         <TextBox x:Name="NameBox"
             Style="{DynamicResource txtStyle}" 
                  Grid.Row="2"
-                 Text="{Binding Name}" 
+                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
             GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" />
 
         <PasswordBox x:Name="PassBox" 
             Style="{DynamicResource pswrdStyle}"
+            Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                     
              Grid.Row="3" 
             />
         <Button Content="Войти"  Grid.Row="4"
                 Style="{DynamicResource btnStyle}"
-                Height="40" Width="200" Click="Button_Click"/>
+                Height="40" Width="200" 
+                Command="{Binding CheckRegCommand}"/>
+        
         <Button Content="Зарегистрироваться" 
                 Style="{DynamicResource btnStyle}"
                 BorderBrush="Transparent"
