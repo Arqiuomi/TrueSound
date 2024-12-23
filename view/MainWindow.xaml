@@ -65,8 +65,9 @@
         <Button x:Name="UserBtn"
             Grid.Row="5"
             Grid.Column="0"
-            Style="{DynamicResource BtnStyle}" Click="UserBtn_Click">
-                <Image Source="/view/user.png" />
+            Style="{DynamicResource BtnStyle}" 
+            Click="UserBtn_Click">
+            <Image Source="/view/user.png" />
         </Button>
 
         <Button x:Name="LibraryBtn"

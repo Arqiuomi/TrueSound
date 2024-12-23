@@ -26,23 +26,8 @@ namespace TrueSound.view
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            model.User user = (model.User)this.Resources["NewUser"];
-            user.Password=PassBox.Password; //костыль
-            if (ViewModel.RegistrationChecker.checkReg(user.Name, user.Password))
-            {
-                MainWindow mainWindow = new MainWindow(user);
-                mainWindow.Show();
-                this.Close();
-            }
-            else
-            {
-                //предупреждение, если введены неверные данные
-                MessageBox.Show("Проверьте имя пользователя и пароль","", MessageBoxButton.OK,MessageBoxImage.Hand);
-            }
-        }
-        
+
+        //Тут этого быть не должно
         private void NameBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (NameBox.Text == "Имя пользователя")

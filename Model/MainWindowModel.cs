@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TrueSound.ViewModel;
 
 namespace TrueSound.Model
 {
@@ -13,8 +14,10 @@ namespace TrueSound.Model
 
 
         public MainWindowModel() { }
-        public MainWindowModel(string Name, string Password) 
+        public MainWindowModel(OpenViewModel vm) 
         {
+            Name = vm.Name;
+            Password = vm.Password;
         }
 
 

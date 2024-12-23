@@ -13,22 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrueSound.model;
+using TrueSound.ViewModel;
 
 namespace TrueSound.view
 {
-    /// <summary>
-    /// Логика взаимодействия для UserPage.xaml
-    /// </summary>
     public partial class UserPage : Page
     {
-        
-        public UserPage(User user)
+        public UserPage()
+        { 
+            InitializeComponent();
+        }
+
+            public UserPage(OpenViewModel vm)
         {
             InitializeComponent();
-            this.Resources["NewUser"] = user;
-            MessageBox.Show($"{user.Name}");
-            MessageBox.Show($"{((User)this.Resources["NewUser"]).Name}");
-            //NameBox.Text =user.Name;
+            NameBox.Text = vm.Name;
             NameBox.IsEnabled = false;
         }
 

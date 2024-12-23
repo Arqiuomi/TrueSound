@@ -10,21 +10,25 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrueSound.model;
 using TrueSound.view;
+using TrueSound.ViewModel;
 
 namespace TrueSound
 {
 
     public partial class MainWindow : Window
     {
-        Config config = new Config();
-        DB db;
-        User User {  get; set; }
-        public MainWindow(User user)
+        
+
+        public MainWindow()
         {
             InitializeComponent();
-            db = new DB(config); 
-            User = user;
-     //       btn.Content = db.userNameInfo();
+        }
+
+
+        public MainWindow(OpenViewModel vm)
+        {
+            InitializeComponent();
+            DataContext = vm;
         }
 
         private void LibraryBtn_Click(object sender, RoutedEventArgs e)
@@ -40,7 +44,7 @@ namespace TrueSound
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
             PageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; //убираем стрелочки-навигации между страницами свитчера
-            UserPage userPage = new UserPage(User);
+            UserPage userPage = new UserPage((OpenViewModel)this.DataContext); //передали тот самый объект vm из конструктора
             pageSwitcher.Content=userPage;
         }
     }
