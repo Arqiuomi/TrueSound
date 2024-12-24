@@ -30,7 +30,7 @@ namespace TrueSound.ViewModel
 
         public void CheckRegEntrance()
         {
-            if (ViewModel.RegistrationChecker.checkReg(Name, Password))
+            if (DB.validUser(Name, Password))
             {
                 MainWindow mainWindow = new MainWindow(this);
                 mainWindow.Show();
@@ -54,18 +54,16 @@ namespace TrueSound.ViewModel
             }
             else
             {
-                OpenWindow openWindow = new OpenWindow();
+                OpenWindow openWindow = new OpenWindow(this);
                 openWindow.Show();
                 CloseWindow("RegW");
-
             }
 
         }
 
         public bool CorrectRegChecker(string password, string passwordCopy)
-            { 
-            if (password == passwordCopy) return true;
-            return false;
+            {
+            return password == passwordCopy;
             }
 
         private void CloseWindow(string windowName)

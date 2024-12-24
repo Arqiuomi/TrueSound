@@ -9,10 +9,8 @@ namespace TrueSound.ViewModel
 {
     
 
-    public class RegistrationChecker
+    public static class RegistrationChecker
     {
-        static Config config =new();
-        static DB dB = new DB(config);
         public static bool checkReg(string name, string password)
         {
             /* 
@@ -20,7 +18,7 @@ namespace TrueSound.ViewModel
                name - имя пользователя
                password - пароль
              */
-           return dB.validUser(name, password); //возвращает bool
+           return DB.validUser(name, password); //возвращает bool
         }
 
 

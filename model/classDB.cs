@@ -7,17 +7,11 @@ using MySql.Data.MySqlClient;
 namespace TrueSound.model
 {
 
-    public class DB
+    public static class DB
     {
-        string connectionString;
-
-        public DB(Config config)
-        {
-            connectionString = $"Server={config.host}; Port={config.port}; Database={config.dbName};" +
-                                                    $" User ID={config.user}; Password={config.password};";
-        }
-
-        public string userNameInfo()
+        static string connectionString = $"Server={Config.Host}; Port={Config.Port}; Database={Config.DbName};" +
+                                                    $" User ID={Config.User}; Password={Config.Password};";
+        public static string userNameInfo()
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -44,7 +38,7 @@ namespace TrueSound.model
                 return "NULL";
             }
         }
-        public bool validUser(string username, string password)
+        public static bool validUser(string username, string password)
         {
             /*
              проверяет, есть ли пользователь с таким именем и паролем в БД
@@ -71,8 +65,5 @@ namespace TrueSound.model
             }
             return false;
         }
-
-
-
     }
 }

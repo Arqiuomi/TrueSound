@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TrueSound.view"
         xmlns:model="clr-namespace:TrueSound.model"
         xmlns:vm="clr-namespace:TrueSound.ViewModel"
+        xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -81,9 +82,17 @@
         <TextBox x:Name="NameBox"
                  Style="{DynamicResource txtStyle}" 
                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-                 GotFocus="NameBox_GotFocus" LostFocus="NameBox_LostFocus" 
-                 Grid.Row="2"     
-                 />
+                 Grid.Row="2">
+            <!--<ie:Interaction.Triggers>
+                <ie:EventTrigger EventName="GotFocus">
+                    <ie:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
+                </ie:EventTrigger>
+                <ie:EventTrigger EventName="LostFocus">
+                    <ie:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
+                </ie:EventTrigger>
+            </ie:Interaction.Triggers>-->
+        </TextBox>
+        
 
         <!--<PasswordBox x:Name="PassBox" 
             Style="{DynamicResource pswrdStyle}"

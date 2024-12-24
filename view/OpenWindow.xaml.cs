@@ -26,6 +26,12 @@ namespace TrueSound.view
             InitializeComponent();
         }
 
+        public OpenWindow(OpenViewModel vm)
+        {
+            InitializeComponent();
+            DataContext = vm;
+        }
+
 
         //Тут этого быть не должно
         private void NameBox_GotFocus(object sender, RoutedEventArgs e)
