@@ -24,6 +24,7 @@ namespace TrueSound.view
         public OpenWindow()
         {
             InitializeComponent();
+
         }
 
         public OpenWindow(OpenViewModel vm)
@@ -34,15 +35,15 @@ namespace TrueSound.view
 
 
         //Тут этого быть не должно
-        private void NameBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (NameBox.Text == "Имя пользователя")
-                NameBox.Text = "";
-        }
-        private void NameBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (NameBox.Text == "")
-                NameBox.Text = "Имя пользователя";
-        }
+        //private void NameBox_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (NameBox.Text == "Имя пользователя")
+        //        NameBox.Text = "";
+        //}
+        //private void NameBox_LostFocus(object sender, RoutedEventArgs e)
+        //{
+        //    if (NameBox.Text == "")
+        //        NameBox.Text = "Имя пользователя";
+        //}
     }
 }
