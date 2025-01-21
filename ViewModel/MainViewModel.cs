@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using TrueSound.view;
+using TrueSound.View;
 using TrueSound.model;
 using TrueSound.Model;
 namespace TrueSound.ViewModel
@@ -15,7 +16,7 @@ namespace TrueSound.ViewModel
         private MainWindowModel _main;
         public DelegateCommand ProfileCommand { get; }
         public DelegateCommand LibraryCommand { get; }
-        public DelegateCommand JanresCommand { get; }
+        public DelegateCommand PlayerCommand { get; }
         public DelegateCommand SettingCommand { get; }
 
 
@@ -24,6 +25,7 @@ namespace TrueSound.ViewModel
             _main = new MainWindowModel(vm);
             ProfileCommand = new DelegateCommand(OnProfileCommand);
             LibraryCommand = new DelegateCommand(OnLibraryCommand);
+            PlayerCommand = new DelegateCommand(OnPlayerCommand);
         }
 
         private void OnProfileCommand()
@@ -39,7 +41,12 @@ namespace TrueSound.ViewModel
             LibraryPage libraryPage = new LibraryPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
             pageSwitcher.Content = libraryPage;
         }
-
+        private void OnPlayerCommand()
+        {
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            PlayerPage playerPage = new PlayerPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
+            pageSwitcher.Content = playerPage;
+        }
 
 
         public string Name

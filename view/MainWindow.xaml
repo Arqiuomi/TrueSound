@@ -89,11 +89,14 @@
             
         </Button>
 
-        <Button x:Name="SoundBtn"
+        <Button x:Name="PlayerBtn"
             Grid.Row="5"
             Grid.Column="2"
-            Style="{DynamicResource BtnStyle}">
+            Style="{DynamicResource BtnStyle}"
+           Command="{Binding PlayerCommand}"
+                >
             <Image Source="/view/vinyl.png" />
+            
         </Button>
 
         <Button x:Name="SettingBtn"

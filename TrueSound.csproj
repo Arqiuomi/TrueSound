@@ -11,6 +11,9 @@
 
   <ItemGroup>
     <None Remove="nots.png" />
+    <None Remove="View\image\back.png" />
+    <None Remove="View\image\forward.png" />
+    <None Remove="View\image\playPause.png" />
     <None Remove="View\library.png" />
     <None Remove="View\nots.png" />
     <None Remove="View\settings.png" />
@@ -35,6 +38,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="View\image\back.png" />
+    <Resource Include="View\image\forward.png" />
+    <Resource Include="View\image\playPause.png" />
     <Resource Include="View\library.png" />
     <Resource Include="View\settings.png" />
     <Resource Include="View\user.png" />
