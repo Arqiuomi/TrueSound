@@ -38,7 +38,7 @@
 
                
     </Window.Resources>
-
+    
 
     <Grid Background="#FF102136">
         <Grid.ColumnDefinitions>
@@ -66,14 +66,15 @@
             Grid.Row="5"
             Grid.Column="0"
             Style="{DynamicResource BtnStyle}" 
-            Click="UserBtn_Click">
+            Command="{Binding ProfileCommand}">
             <Image Source="/view/user.png" />
         </Button>
 
         <Button x:Name="LibraryBtn"
             Grid.Row="5"
             Grid.Column="1"
-            Style="{DynamicResource BtnStyle}" Click="LibraryBtn_Click">
+            Style="{DynamicResource BtnStyle}" 
+            Command="{Binding LibraryCommand}">
             <Image x:Name="mouse" Source="/view/library.png" 
             />
             <Button.Template>

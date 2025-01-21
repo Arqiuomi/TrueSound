@@ -26,7 +26,20 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
 
-        <Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}"> 
+        <!--<Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}">-->
+        <Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Grid>
+                            <Border CornerRadius="5" BorderBrush="Wheat" BorderThickness="1">
+                                <ContentPresenter/>
+                                
+                            </Border> 
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="14"/>
@@ -36,26 +49,18 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Width" Value="250"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>
             <!--<Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>-->
             <!--<Setter Property="md:HintAssist.FloatingScale" Value="1"/>-->
-            
             <!--<Setter Property="md:HintAssist.HintHorizontalAlignment" Value="Center"/>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="BorderBrush" Value="Wheat"/>
                 </Trigger>
-                <Trigger Property="IsMouseCaptured" Value="True">
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="BorderBrush" Value="Wheat"/>
-                </Trigger>
-                <Trigger Property="IsMouseDirectlyOver" Value="True">
-                    <Setter Property="BorderThickness" Value="1"/>
-                    <Setter Property="BorderBrush" Value="Wheat"/>
-                </Trigger>
+               
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="BorderBrush" Value="Wheat"/>
@@ -64,9 +69,7 @@
             </Style.Triggers>
         </Style>
         
-        
-
-        <Style x:Key="pswrdStyle" TargetType="PasswordBox">
+        <Style x:Key="pswrdStyle" TargetType="PasswordBox" BasedOn="{StaticResource MaterialDesignOutlinedRevealPasswordBox}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="14"/>
@@ -76,7 +79,18 @@
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Width" Value="250"/>
-            <Setter Property="Height" Value="40"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="md:HintAssist.Hint" Value="Пароль"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderThickness" Value="0.5"/>
+                    <Setter Property="BorderBrush" Value="Wheat"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="Wheat"/>
+                    
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="btnStyle" TargetType="Button">
@@ -107,12 +121,14 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" Grid.Row="1"
                    Text="Добро пожаловать в TrueSound!"  Height="37" Width="320"/>
+        
         <TextBox x:Name="NameBox"
                  Style="{DynamicResource txtStyle}" 
                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-                 Grid.Row="2"
-                 >
-            <!--<ie:Interaction.Triggers>
+                 Grid.Row="2"/>
+
+        
+        <!--<ie:Interaction.Triggers>
                 <ie:EventTrigger EventName="GotFocus">
                     <ie:InvokeCommandAction Command="{Binding GotFocusCommand}"/>
                 </ie:EventTrigger>
@@ -120,7 +136,6 @@
                     <ie:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>-->
-        </TextBox>
         
 
         <PasswordBox x:Name="PassBox" 

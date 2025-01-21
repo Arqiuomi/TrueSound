@@ -31,6 +31,13 @@ namespace TrueSound.view
             NameBox.IsEnabled = false;
         }
 
+        public UserPage(MainViewModel vm)
+        {
+            InitializeComponent();
+            NameBox.Text = vm.Name;
+            NameBox.IsEnabled = false;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow openWindow = new OpenWindow();

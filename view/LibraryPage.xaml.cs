@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrueSound.ViewModel;
 
 namespace TrueSound.view
 {
@@ -21,6 +22,13 @@ namespace TrueSound.view
     public partial class LibraryPage : Page
     {
         public LibraryPage()
+        {
+            InitializeComponent();
+            FillGenersList();
+
+        }
+
+        public LibraryPage(MainViewModel vm)
         {
             InitializeComponent();
             FillGenersList();

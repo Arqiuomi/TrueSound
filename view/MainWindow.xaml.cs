@@ -28,24 +28,8 @@ namespace TrueSound
         public MainWindow(OpenViewModel vm)
         {
             InitializeComponent();
-            DataContext = vm;
+            DataContext = new MainViewModel(vm);
         }
 
-        private void LibraryBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            PageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; //убираем стрелочки-навигации между страницами свитчера
-            LibraryPage buttonFrame = new ();
-            pageSwitcher.Content = buttonFrame;
-
-        }
-
-        private void UserBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            PageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; //убираем стрелочки-навигации между страницами свитчера
-            UserPage userPage = new UserPage((OpenViewModel)this.DataContext); //передали тот самый объект vm из конструктора
-            pageSwitcher.Content=userPage;
-        }
     }
 }
