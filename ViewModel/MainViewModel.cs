@@ -31,6 +31,7 @@ namespace TrueSound.ViewModel
         private void OnProfileCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             UserPage userPage = new UserPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
             pageSwitcher.Content = userPage;
         }
@@ -38,12 +39,14 @@ namespace TrueSound.ViewModel
         private void OnLibraryCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             LibraryPage libraryPage = new LibraryPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
             pageSwitcher.Content = libraryPage;
         }
         private void OnPlayerCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             PlayerPage playerPage = new PlayerPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
             pageSwitcher.Content = playerPage;
         }
