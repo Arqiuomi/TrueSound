@@ -12,7 +12,10 @@
   <ItemGroup>
     <None Remove="nots.png" />
     <None Remove="View\image\back.png" />
+    <None Remove="View\image\filledLike.png" />
     <None Remove="View\image\forward.png" />
+    <None Remove="View\image\like.png" />
+    <None Remove="View\image\myLike.png" />
     <None Remove="View\image\playPause.png" />
     <None Remove="View\library.png" />
     <None Remove="View\nots.png" />
@@ -39,7 +42,10 @@
 
   <ItemGroup>
     <Resource Include="View\image\back.png" />
+    <Resource Include="View\image\filledLike.png" />
     <Resource Include="View\image\forward.png" />
+    <Resource Include="View\image\like.png" />
+    <Resource Include="View\image\myLike.png" />
     <Resource Include="View\image\playPause.png" />
     <Resource Include="View\library.png" />
     <Resource Include="View\settings.png" />

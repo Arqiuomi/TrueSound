@@ -31,7 +31,12 @@
 
         <Style x:Key="BtnStyle" TargetType="Button">
         </Style>
-        
+
+        <Style x:Key="LikeBtnStyle" TargetType="Button">
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property= "Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="7 7 7 7"></Setter>
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -95,6 +100,17 @@
                 Background="Transparent">
                 <Image Source="image/forward.png"/>
             </Button>
+
+            <Button x:Name ="LikeButton"
+                Grid.Column="4" 
+                Style="{DynamicResource LikeBtnStyle}"
+                Command="{Binding LikePressCommand}"
+                CommandParameter="{Binding CommandParameter}"
+                    >
+                <Image x:Name="likeImage" Source="{Binding CommandParameter}"/>
+                
+            </Button>
+
         </Grid>
     </Grid>
 </Page>

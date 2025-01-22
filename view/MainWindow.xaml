@@ -102,8 +102,11 @@
         <Button x:Name="SettingBtn"
             Grid.Row="5"
             Grid.Column="3"
-            Style="{DynamicResource BtnStyle}" >
-            <Image Source="/view/settings.png"/>
+            Style="{DynamicResource BtnStyle}" 
+            Command="{Binding MyLikeCommand}"
+                >
+            
+            <Image Source="/view/image/myLike.png"/>
             </Button>
     
     </Grid>
