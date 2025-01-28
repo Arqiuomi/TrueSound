@@ -12,6 +12,7 @@ namespace TrueSound.Model
         public string? Name { get; set; }
         public string? Password { get; set; }
 
+        public string? ImageSource { get; set; }
 
         public MainWindowModel() { }
         public MainWindowModel(OpenViewModel vm) 

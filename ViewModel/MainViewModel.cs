@@ -19,9 +19,9 @@ namespace TrueSound.ViewModel
         public DelegateCommand LibraryCommand { get; }
         public DelegateCommand PlayerCommand { get; }
         public DelegateCommand MyLikeCommand { get; }
-        public DelegateCommand<object> LikePressCommand { get; }
+        public DelegateCommand LikePressCommand { get; }  
 
-        public string CommandParameter { get; set; }
+
 
         public MainViewModel(OpenViewModel vm) 
         {
@@ -30,8 +30,8 @@ namespace TrueSound.ViewModel
             LibraryCommand = new DelegateCommand(OnLibraryCommand);
             PlayerCommand = new DelegateCommand(OnPlayerCommand);
             MyLikeCommand = new DelegateCommand(OnMyLikeCommand);
-            LikePressCommand = new DelegateCommand<object>(OnLikePressCommand);
-            CommandParameter = "image/like.png";
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            ImageSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
         }
 
         private void OnProfileCommand()
@@ -65,14 +65,13 @@ namespace TrueSound.ViewModel
             pageSwitcher.Content = myLikePage;
         }
 
-        private void OnLikePressCommand(object parameter)
+        private void OnLikePressCommand()
         {
-            string imagePath = parameter as string;
-            CommandParameter = imagePath == "image/like.png" ? "image/filledLike.png" : "image/like.png";
-            
+            if (ImageSource == "image/like.png")
+                ImageSource = "image/filledLike.png";
+            else
+                ImageSource = "image/like.png";
         }
-
-
 
         public string Name
         {
@@ -83,5 +82,16 @@ namespace TrueSound.ViewModel
                 OnPropertyChanged(nameof(Name));
             }
         }
+
+        public string ImageSource
+        {
+            get { return _main.ImageSource; }
+            set
+            {
+                _main.ImageSource = value;
+                OnPropertyChanged(nameof(ImageSource));
+            }
+        }
+
     }
 }

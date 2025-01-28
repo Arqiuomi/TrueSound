@@ -1,27 +1,54 @@
-﻿
-<Page x:Class="TrueSound.view.LibraryPage"
+﻿<Page x:Class="TrueSound.view.LibraryPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TrueSound.view"
       mc:Ignorable="d" 
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="600" d:DesignWidth="400"
       Title="LibraryPage"
       Background="#FF2A3037">
-    
+    <Page.Resources>
+        <Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="Wheat"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Wheat"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="md:HintAssist.Hint" Value="Поиск"/>
+            <Setter Property="md:TextFieldAssist.UnderlineCornerRadius" Value="1"/>
+            <Setter Property="md:ButtonAssist.CornerRadius" Value="1"/>
+        </Style>
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="0*"/>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="529*"/>
         </Grid.RowDefinitions>
 
-        <ListBox x:Name="LibraryListBox"
-        Background="#FF2A3037"/>
-    
+        <TextBox x:Name="SearchBox"
+            Style="{DynamicResource txtStyle}" 
+            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+            Grid.Row="0"/>
+
+        <ListBox
+            x:Name="LibraryListBox"
+            Background="#FF2A3037"
+            Height="300" VerticalAlignment="Top" 
+            Grid.Row="1"
+            Grid.RowSpan="2"/>
+
     </Grid>
 
 </Page>

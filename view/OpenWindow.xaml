@@ -26,8 +26,8 @@
             <Setter Property="Background" Value="Transparent"/>
         </Style>
 
-        <!--<Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}">-->
-        <Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+        <Style x:Key="txtStyle" TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFilledTextBox}">
+            <!--#region NewRegion -->
             <!--<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
@@ -40,6 +40,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>-->
+            <!--#endregion-->
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="14"/>
@@ -52,6 +53,7 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>
+            <Setter Property="md:ButtonAssist.CornerRadius" Value="20"/>
             <!--<Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>-->
             <!--<Setter Property="md:HintAssist.FloatingScale" Value="1"/>-->
             <!--<Setter Property="md:HintAssist.HintHorizontalAlignment" Value="Center"/>-->
@@ -60,11 +62,9 @@
                     <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="BorderBrush" Value="Wheat"/>
                 </Trigger>
-               
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="BorderThickness" Value="1"/>
                     <Setter Property="BorderBrush" Value="Wheat"/>
-
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -88,7 +88,6 @@
                 </Trigger>
                 <Trigger Property="IsFocused" Value="True">
                     <Setter Property="BorderBrush" Value="Wheat"/>
-                    
                 </Trigger>
             </Style.Triggers>
         </Style>

@@ -41,8 +41,9 @@ namespace TrueSound.view
             string[] geners = ["классика", "рок", "поп", "фанк", "джаз", "кантри",
                 "рэп", "шансон", "хип-хоп", "дэнсхолл", "ритм-н-блюз", "народные песни"];
 
- 
 
+            //string[] genre = Properties.Settings.Default.genres.Split(','); //может меняться в коде
+            string[] genres = Properties.Resources.genre.Split(','); //не меняется и не должно
 
             foreach (string gener in geners)
             {

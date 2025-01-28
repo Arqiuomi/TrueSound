@@ -58,7 +58,6 @@ namespace TrueSound.ViewModel
                 openWindow.Show();
                 CloseWindow("RegW");
             }
-
         }
 
         public bool CorrectRegChecker(string password, string passwordCopy)
@@ -76,15 +75,7 @@ namespace TrueSound.ViewModel
                 }
             }
         }
-
-        //public void IfGotFocus(object sender, RoutedEventArgs e)
-        //{
-        //    var box = sender as TextBox;
-        //    if (box.Text == "Имя пользователя")
-        //        box.Text = "";
-        //}
-
-
+                
         public string Email
         {
             get { return _open.Email; }

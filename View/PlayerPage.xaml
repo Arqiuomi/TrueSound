@@ -5,7 +5,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TrueSound.View"
       xmlns:model="clr-namespace:TrueSound.model"
-      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
+      xmlns:viewmodel="clr-namespace:TrueSound.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="400"
       Title="PlayerPage"
@@ -32,10 +33,23 @@
         <Style x:Key="BtnStyle" TargetType="Button">
         </Style>
 
-        <Style x:Key="LikeBtnStyle" TargetType="Button">
+        <Style x:Key="LikeBtnStyle" TargetType="Button" BasedOn="{StaticResource MaterialDesignIconButton}">
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property= "Background" Value="Transparent"/>
-            <Setter Property="Margin" Value="7 7 7 7"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"
+                                Margin="7 7 7 7"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Page.Resources>
 
@@ -104,11 +118,11 @@
             <Button x:Name ="LikeButton"
                 Grid.Column="4" 
                 Style="{DynamicResource LikeBtnStyle}"
-                Command="{Binding LikePressCommand}"
-                CommandParameter="{Binding CommandParameter}"
-                    >
-                <Image x:Name="likeImage" Source="{Binding CommandParameter}"/>
-                
+                Command="{Binding LikePressCommand}" 
+                    > 
+                <!--CommandParameter="{Binding MyCommandParameter, UpdateSourceTrigger=PropertyChanged}"-->
+                <!--<ContentPresenter Content="{StaticResource likeImage}" />-->
+                <Image Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"/>
             </Button>
 
         </Grid>

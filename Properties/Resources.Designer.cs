@@ -59,5 +59,14 @@ namespace TrueSound.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на классика,рок,поп,фанк,джаз,кантри,рэп,шансон,хип-хоп,дэнсхолл,ритм-н-блюз,народные песни.
+        /// </summary>
+        internal static string genre {
+            get {
+                return ResourceManager.GetString("genre", resourceCulture);
+            }
+        }
     }
 }
