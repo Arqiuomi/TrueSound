@@ -21,6 +21,7 @@ namespace TrueSound.ViewModel
         public DelegateCommand MyLikeCommand { get; }
         public DelegateCommand LikePressCommand { get; }  
         public DelegateCommand SearchCommand { get; }
+        public DelegateCommand SearchFocusCommand { get; }
 
 
 
@@ -34,6 +35,7 @@ namespace TrueSound.ViewModel
             MyLikeCommand = new DelegateCommand(OnMyLikeCommand);
             LikePressCommand = new DelegateCommand(OnLikePressCommand);
             SearchCommand = new DelegateCommand(OnSearchCommand);
+            SearchFocusCommand = new DelegateCommand(OnSearchFocusCommand);
             ImageSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
         }
 
@@ -80,7 +82,10 @@ namespace TrueSound.ViewModel
         {
             Search = "hi"; // тут срабатывает действие поиска - отправка запроса в парсер
         }
-        
+        private void OnSearchFocusCommand()
+        {
+            Search =string.Empty;
+        }
         
         public string Name
         {

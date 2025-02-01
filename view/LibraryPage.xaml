@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:TrueSound.view"
       mc:Ignorable="d" 
       xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
       d:DesignHeight="600" d:DesignWidth="400"
       Title="LibraryPage"
       Background="#FF2A3037">
@@ -23,12 +24,6 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="md:HintAssist.Hint" Value="Поиск"/>
-            <Style.Triggers>
-                <Trigger Property="IsFocused" Value="True">
-                    <Setter Property="Text" Value=""/>
-                </Trigger>
-
-            </Style.Triggers>
         </Style>
     </Page.Resources>
 
@@ -50,6 +45,11 @@
                     Key="Enter"
                     Command="{Binding SearchCommand}"/>
             </TextBox.InputBindings>
+            <ie:Interaction.Triggers>
+                <ie:EventTrigger EventName="GotMouseCapture">
+                    <ie:InvokeCommandAction Command="{Binding SearchFocusCommand}"/>
+                </ie:EventTrigger>
+            </ie:Interaction.Triggers>
         </TextBox>
 
         <ListBox
