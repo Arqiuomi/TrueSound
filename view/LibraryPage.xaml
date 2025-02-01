@@ -23,8 +23,12 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="md:HintAssist.Hint" Value="Поиск"/>
-            <Setter Property="md:TextFieldAssist.UnderlineCornerRadius" Value="1"/>
-            <Setter Property="md:ButtonAssist.CornerRadius" Value="1"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Text" Value=""/>
+                </Trigger>
+
+            </Style.Triggers>
         </Style>
     </Page.Resources>
 
@@ -39,15 +43,20 @@
 
         <TextBox x:Name="SearchBox"
             Style="{DynamicResource txtStyle}" 
-            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-            Grid.Row="0"/>
+            Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" 
+            Grid.Row="0">
+            <TextBox.InputBindings>
+                <KeyBinding
+                    Key="Enter"
+                    Command="{Binding SearchCommand}"/>
+            </TextBox.InputBindings>
+        </TextBox>
 
         <ListBox
             x:Name="LibraryListBox"
             Background="#FF2A3037"
-            Height="300" VerticalAlignment="Top" 
-            Grid.Row="1"
-            Grid.RowSpan="2"/>
+            Height="472" VerticalAlignment="Top" 
+            Grid.Row="1"/>
 
     </Grid>
 

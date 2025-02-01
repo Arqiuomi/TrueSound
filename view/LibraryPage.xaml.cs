@@ -32,6 +32,7 @@ namespace TrueSound.view
         {
             InitializeComponent();
             FillGenersList();
+            DataContext = vm;
 
         }
 
@@ -68,6 +69,9 @@ namespace TrueSound.view
                 return image;
         }
 
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
 
+        }
     }
 }
