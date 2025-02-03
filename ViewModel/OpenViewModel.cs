@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,23 +17,29 @@ namespace TrueSound.ViewModel
     public class OpenViewModel : BaseViewModel
     {
         private OpenWindowModel _open;
-
         public DelegateCommand CheckRegCommand { get; }
         //public DelegateCommand <object> CheckFocusCommand { get; } 
         public DelegateCommand<object> RegLogMoveCommand { get; }
 
         public OpenViewModel()
         {
-            _open = new OpenWindowModel();
+
+            _open = new OpenWindowModel(true);
+            ReadUserFile();
             CheckRegCommand = new DelegateCommand(CheckRegEntrance);
             RegLogMoveCommand = new DelegateCommand<object>(RegLogMove);
             //CheckFocusCommand = new DelegateCommand<object>(IfGotFocus);
         }
 
+
+
+
         public void CheckRegEntrance()
         {
             if (DB.validUser(Name, Password))
             {
+
+                WriteUserFile(RememberMe);
                 MainWindow mainWindow = new MainWindow(this);
                 mainWindow.Show();
                 CloseWindow("OpenW");
@@ -43,7 +51,31 @@ namespace TrueSound.ViewModel
             }
         }
 
-        
+
+        public void WriteUserFile(bool RememberMe, string filename = "authUser.txt")
+        {
+            string fileDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Model", filename);
+            if (RememberMe)
+            {
+                File.WriteAllText(Path.Combine(fileDirectory), $"{Name}\n{Password}");
+            }
+            else 
+            {
+                File.WriteAllText (Path.Combine(fileDirectory), $"{String.Empty}\n{String.Empty}");
+            }
+        }
+
+        public void ReadUserFile(string filename = "authUser.txt")
+        {
+            string fileDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Model", filename);
+            string[] read = File.ReadAllLines(fileDirectory);
+            if (read.Length > 1) 
+            {
+                Name = read[0];
+                Password = read[1];
+            }
+        }
+
         public void RegLogMove(object windowName)
         {
             if (windowName.ToString() == "OpenW")
@@ -115,6 +147,14 @@ namespace TrueSound.ViewModel
                 _open.PasswordCopy = value;
                 OnPropertyChanged(nameof(PasswordCopy));
             }
+        }
+
+        public bool RememberMe
+        {
+            get { return _open.RememberMe; }
+
+            set { _open.RememberMe = value; 
+                OnPropertyChanged(nameof(RememberMe)); }
         }
     }
 }

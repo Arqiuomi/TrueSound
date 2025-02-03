@@ -102,6 +102,34 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
+        <Style x:Key="checkStyle" TargetType="CheckBox">
+            <Setter Property="BorderBrush" Value="Wheat"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0 0 10 0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="Wheat"/>
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                                >
+                            <Path Stroke="Wheat"
+                                  Cursor="Hand"/>
+                            <ContentPresenter 
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="Запомнить меня"
+                                Margin="0 0 5 0"
+                                />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>-->
+
+        </Style>
     </Window.Resources>
     
     <Window.DataContext>
@@ -112,6 +140,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="92*"/>
             <RowDefinition Height="81*"/>
+            <RowDefinition Height="86*"/>
             <RowDefinition Height="86*"/>
             <RowDefinition Height="86*"/>
             <RowDefinition Height="65*"/>
@@ -142,8 +171,17 @@
             md:PasswordBoxAssist.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
              Grid.Row="3" 
             />
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="4" HorizontalAlignment="Center">
+            <CheckBox 
+                IsChecked="{Binding RememberMe, UpdateSourceTrigger=PropertyChanged}"
+                      Style="{DynamicResource checkStyle}"
+                      Content="Запомнить меня"
+                      />
+            
+        </StackPanel>
 
-        <Button Content="Войти"  Grid.Row="4"
+        <Button Content="Войти"  Grid.Row="5"
                 Style="{DynamicResource btnStyle}"
                 Height="40" Width="200" 
                 Command="{Binding CheckRegCommand}"/>
@@ -151,7 +189,7 @@
         <Button Content="Зарегистрироваться" 
                 Style="{DynamicResource btnStyle}"
                 BorderBrush="Transparent"
-                Grid.Row="5" 
+                Grid.Row="6" 
                 Height="40" Width="200"
                 Command="{Binding RegLogMoveCommand}"
                 CommandParameter="OpenW"

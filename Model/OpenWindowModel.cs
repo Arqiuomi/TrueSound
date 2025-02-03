@@ -13,9 +13,15 @@ namespace TrueSound.Model
         public string? Password { get; set; }
         public string? PasswordCopy { get; set; }
 
-        public OpenWindowModel() 
-        {
+        public bool RememberMe { get; set; }
 
+        public OpenWindowModel() 
+        { 
+        }
+
+        public OpenWindowModel(bool RememberMe) 
+        {
+            this.RememberMe = RememberMe;
         }
 
     }
