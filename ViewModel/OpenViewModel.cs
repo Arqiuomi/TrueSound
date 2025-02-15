@@ -23,15 +23,11 @@ namespace TrueSound.ViewModel
 
         public OpenViewModel()
         {
-
             _open = new OpenWindowModel(true);
-            ReadUserFile();
             CheckRegCommand = new DelegateCommand(CheckRegEntrance);
             RegLogMoveCommand = new DelegateCommand<object>(RegLogMove);
             //CheckFocusCommand = new DelegateCommand<object>(IfGotFocus);
         }
-
-
 
 
         public void CheckRegEntrance()
@@ -39,7 +35,7 @@ namespace TrueSound.ViewModel
             if (DB.validUser(Name, Password))
             {
 
-                WriteUserFile(RememberMe);
+                WriteUserFile();
                 MainWindow mainWindow = new MainWindow(this);
                 mainWindow.Show();
                 CloseWindow("OpenW");
@@ -50,30 +46,20 @@ namespace TrueSound.ViewModel
                 MessageBox.Show("Проверьте имя пользователя и пароль", "", MessageBoxButton.OK, MessageBoxImage.Hand);
             }
         }
-
-
-        public void WriteUserFile(bool RememberMe, string filename = "authUser.txt")
+                   
+        public void WriteUserFile()
         {
-            string fileDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Model", filename);
             if (RememberMe)
             {
-                File.WriteAllText(Path.Combine(fileDirectory), $"{Name}\n{Password}");
+                Properties.Settings.Default.Login = Name;
+                Properties.Settings.Default.Password = Password;   
             }
             else 
             {
-                File.WriteAllText (Path.Combine(fileDirectory), $"{String.Empty}\n{String.Empty}");
+                Properties.Settings.Default.Login = string.Empty;
+                Properties.Settings.Default.Password = string.Empty;
             }
-        }
-
-        public void ReadUserFile(string filename = "authUser.txt")
-        {
-            string fileDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Model", filename);
-            string[] read = File.ReadAllLines(fileDirectory);
-            if (read.Length > 1) 
-            {
-                Name = read[0];
-                Password = read[1];
-            }
+            Properties.Settings.Default.Save(); 
         }
 
         public void RegLogMove(object windowName)

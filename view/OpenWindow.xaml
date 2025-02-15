@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrueSound.view"
-        xmlns:model="clr-namespace:TrueSound.model"
+        xmlns:model="clr-namespace:TrueSound.Model"
         xmlns:vm="clr-namespace:TrueSound.ViewModel"
         xmlns:ie="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes" 
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="OpenWindow" Height="600" Width="400"
@@ -16,6 +16,7 @@
         Background="#FF2A3037">
 
     <Window.Resources>
+        <model:MyValueConverter x:Key="MyValueConverter"/>
         
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -53,7 +54,6 @@
             <Setter Property="Height" Value="50"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>
-            <Setter Property="md:ButtonAssist.CornerRadius" Value="20"/>
             <!--<Setter Property="md:HintAssist.Hint" Value="Имя пользователя"/>-->
             <!--<Setter Property="md:HintAssist.FloatingScale" Value="1"/>-->
             <!--<Setter Property="md:HintAssist.HintHorizontalAlignment" Value="Center"/>-->
@@ -81,6 +81,7 @@
             <Setter Property="Width" Value="250"/>
             <Setter Property="Height" Value="50"/>
             <Setter Property="md:HintAssist.Hint" Value="Пароль"/>
+            <!--<Setter Property="md:PasswordBoxAssist.IsPasswordRevealed" Value="True"/>-->
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="BorderThickness" Value="0.5"/>
@@ -131,7 +132,7 @@
 
         </Style>
     </Window.Resources>
-    
+
     <Window.DataContext>
         <vm:OpenViewModel/>
     </Window.DataContext>
@@ -149,11 +150,39 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" Grid.Row="1"
                    Text="Добро пожаловать в TrueSound!"  Height="37" Width="320"/>
-        
+
         <TextBox x:Name="NameBox"
                  Style="{DynamicResource txtStyle}" 
                  Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
-                 Grid.Row="2"/>
+                 Grid.Row="2">
+            <TextBox.Template>
+                <ControlTemplate TargetType="TextBox">
+                    <Border CornerRadius="5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{TemplateBinding  md:HintAssist.Hint}"
+                                       Visibility="{Binding Text.Length, 
+                                            RelativeSource={RelativeSource AncestorType=TextBox},
+                                            Converter={StaticResource MyValueConverter}}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin= "10 0 0 0"/>
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </StackPanel>
+                    </Border>
+                    <!--<ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter Property="Text" Value=""/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>-->
+                </ControlTemplate>
+                
+            </TextBox.Template>
+        </TextBox>
 
         
         <!--<ie:Interaction.Triggers>
@@ -164,13 +193,36 @@
                     <ie:InvokeCommandAction Command="{Binding LostFocusCommand}"/>
                 </ie:EventTrigger>
             </ie:Interaction.Triggers>-->
-        
+
 
         <PasswordBox x:Name="PassBox" 
             Style="{DynamicResource pswrdStyle}"
             md:PasswordBoxAssist.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
-             Grid.Row="3" 
-            />
+             Grid.Row="3">
+            <!--<PasswordBox.Template>
+                <ControlTemplate TargetType="PasswordBox">
+                    <Border CornerRadius="5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            >
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text ="{TemplateBinding  md:HintAssist.Hint}"
+                                       Visibility="{Binding Password.Length, 
+                                            RelativeSource={RelativeSource AncestorType=PasswordBox},
+                                            Converter={StaticResource MyValueConverter}}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       />
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </StackPanel>
+                    </Border>
+                </ControlTemplate>
+            </PasswordBox.Template>-->
+        </PasswordBox>
+        
         <StackPanel Orientation="Horizontal"
                     Grid.Row="4" HorizontalAlignment="Center">
             <CheckBox 

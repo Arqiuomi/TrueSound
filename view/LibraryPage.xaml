@@ -42,7 +42,7 @@
             Grid.Row="0">
             <TextBox.InputBindings>
                 <KeyBinding
-                    Key="Enter"
+                    Gesture="Enter"
                     Command="{Binding SearchCommand}"/>
             </TextBox.InputBindings>
             <ie:Interaction.Triggers>
