@@ -12,7 +12,8 @@ namespace TrueSound.Model
         public string? Name { get; set; }
         public string? Password { get; set; }
 
-        public string? ImageSource { get; set; }
+        public string? ImageLikeSource { get; set; }
+        public string? ImageVolSource { get; set; }
         public string? Search { get; set; }
 
         public MainWindowModel() { }

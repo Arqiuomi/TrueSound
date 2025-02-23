@@ -67,7 +67,7 @@
             Grid.Column="0"
             Style="{DynamicResource BtnStyle}" 
             Command="{Binding ProfileCommand}">
-            <Image Source="/view/user.png" />
+            <Image Source="/view/image/user.png" />
         </Button>
 
         <Button x:Name="LibraryBtn"
@@ -75,7 +75,7 @@
             Grid.Column="1"
             Style="{DynamicResource BtnStyle}" 
             Command="{Binding LibraryCommand}">
-            <Image x:Name="mouse" Source="/view/library.png" 
+            <Image x:Name="mouse" Source="/view/image/library.png" 
             />
             <Button.Template>
                 <ControlTemplate TargetType="Button">
@@ -95,7 +95,7 @@
             Style="{DynamicResource BtnStyle}"
            Command="{Binding PlayerCommand}"
                 >
-            <Image Source="/view/vinyl.png" />
+            <Image Source="/view/image/vinyl.png" />
             
         </Button>
 

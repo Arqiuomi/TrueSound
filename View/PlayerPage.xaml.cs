@@ -29,8 +29,11 @@ namespace TrueSound.View
         {
            InitializeComponent();
            DataContext = vm;
-           
-
+        }
+        public PlayerPage(PlayerViewModel vm)
+        {
+           InitializeComponent();
+           DataContext = vm;
         }
 
     }

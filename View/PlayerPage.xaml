@@ -28,8 +28,10 @@
             <Setter Property="Foreground" Value="Wheat"/>
             <Setter Property="Minimum" Value="0"/>
             <Setter Property="TickFrequency" Value="60"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-
+        
         <Style x:Key="BtnStyle" TargetType="Button">
         </Style>
 
@@ -65,8 +67,12 @@
         </Grid.RowDefinitions>
         <Border
             Style="{DynamicResource BrdrStyle}">
-            <Image Source="/View/vinyl.png"/>
+            <!--<Image Source="/View/vinyl.png"/>-->
+            <Image Source="{Binding AlbumCover}"
+                   Stretch="Uniform"
+                   />
         </Border>
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="35*"/>
@@ -75,16 +81,22 @@
             </Grid.ColumnDefinitions>
             <Label Name="StartTimeLabel"
                 Style="{DynamicResource LblStyle}"
-                Content="0:00"
+                Content="{Binding SliderTime, UpdateSourceTrigger=PropertyChanged}"
                 />
             <Slider  x:Name="DurationSlider" 
                 Grid.Column="1"
+                Width="230"
                 Style="{DynamicResource SldrStyle}"
-            />
+                Value="{Binding SliderValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Maximum="{Binding MaxSliderValue}"
+                TickFrequency="1"/>
+
+
             <Label Name="EndTimeLabel"
                 Grid.Column="2"
                 Style="{DynamicResource LblStyle}"
-                Content="0:00"/>
+                Content="{Binding SliderLastTime, UpdateSourceTrigger=PropertyChanged}"
+                />
         </Grid>
 
         <Grid Grid.Row="2">
@@ -105,13 +117,19 @@
 
             <Button x:Name ="PlayStopButton"
                 Grid.Column="2" 
-                Background="Transparent">
+                Background="Transparent"
+                Command = "{Binding PlayPauseCommand}"
+                    >
                 <Image Source="image/playPause.png"/>
+                
             </Button>
 
             <Button x:Name ="ForwardButton"
                 Grid.Column="3" 
-                Background="Transparent">
+                Background="Transparent"
+                Command="{Binding }" 
+                >
+                    <!--status - bool тип, который изменяется при нажатии--> 
                 <Image Source="image/forward.png"/>
             </Button>
 
@@ -119,12 +137,40 @@
                 Grid.Column="4" 
                 Style="{DynamicResource LikeBtnStyle}"
                 Command="{Binding LikePressCommand}" 
-                    > 
+                    >
                 <!--CommandParameter="{Binding MyCommandParameter, UpdateSourceTrigger=PropertyChanged}"-->
                 <!--<ContentPresenter Content="{StaticResource likeImage}" />-->
-                <Image Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"/>
+                <Image Source="{Binding ImageLikeSource, UpdateSourceTrigger=PropertyChanged}"/>
             </Button>
 
         </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80*"/>
+                <ColumnDefinition Width="239*"/>
+                <ColumnDefinition Width="80*"/>
+            </Grid.ColumnDefinitions>
+           
+            <Button x:Name ="VolButton"
+                Style="{DynamicResource LikeBtnStyle}"
+                Command="{Binding VolPressCommand}" 
+                    >
+                <Image Source="{Binding ImageVolSource, UpdateSourceTrigger=PropertyChanged}"/>
+            </Button>
+            
+            <Slider  x:Name="VolSlider" 
+                Grid.Column="1"
+                Style="{DynamicResource SldrStyle}" 
+                Value="{Binding Volume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Minimum="0"
+                Maximum="1"
+                TickFrequency="0.1"  IsSnapToTickEnabled="True"
+                Width="150"
+            />
+
+        </Grid>
+
+
     </Grid>
 </Page>

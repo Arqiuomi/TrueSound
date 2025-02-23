@@ -1,0 +1,261 @@
+﻿using System;
+using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TrueSound.Model;
+using TrueSound.view;
+using System.Windows;
+using System.Windows.Controls;
+using TrueSound.View;
+using TrueSound.model;
+using System.Windows.Media;
+using TagLib;
+using System.IO;
+using System.Windows.Media.Imaging;
+using TagLib.Mpeg;
+using System.Windows.Threading;
+
+namespace TrueSound.ViewModel
+{
+    public class PlayerViewModel: BaseViewModel
+    {
+        private MainViewModel _mainViewModel;
+        private MediaPlayer _player;
+        private BitmapImage albumCover;
+        private bool _playStatus { get; set; }=false;
+        public DelegateCommand LikePressCommand { get; }
+        public DelegateCommand VolPressCommand { get; }
+        public DelegateCommand PlayPauseCommand { get; }
+        private double _sliderValue;
+        private double _maxSliderValue;
+        private DispatcherTimer _timer;
+
+        public PlayerViewModel() { }
+        public PlayerViewModel(MainViewModel vm)
+        { 
+            _mainViewModel = vm;
+            ImageLikeSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
+            ImageVolSource = "image/vol.png";
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+        }
+        public PlayerViewModel(MainViewModel vm, string source = "audiofile/Dance_Of_The_Dream_Man.mp3") //конструктор для перехода из поисковика
+        {
+            _mainViewModel = vm;
+            _player = new MediaPlayer();
+            //_player.Open(new Uri(source, UriKind.Relative));
+            _player.Open(new Uri("Dance_Of_The_Dream_Man.mp3", UriKind.Absolute));
+            //_player.Play();
+            LoadAlbumCover(source);
+            ImageLikeSource = "image/like.png";
+            ImageVolSource = "image/vol.png";
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+            IsMax(); //ликвидировать
+            CreateTimer();
+        }
+
+
+        private void LoadAlbumCover(string filePath)
+        {
+
+            var file = TagLib.File.Create("../../../" + filePath);
+            if (file.Tag.Pictures.Length > 0)
+            {
+                var picture = file.Tag.Pictures[0];
+                using (var stream = new MemoryStream(picture.Data.Data))
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze(); 
+                    AlbumCover = bitmap;
+                }
+            }
+            else 
+            {
+                AlbumCover = new BitmapImage(new Uri("image/vinyl.png", UriKind.Relative));
+            }
+        }        
+        
+        public void IsMax()
+        { 
+            //Обработчик, проверяющий, открыт ли файл
+            _player.MediaOpened += (s, e) =>
+               MaxSliderValue = _player.NaturalDuration.TimeSpan.TotalSeconds;
+        }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+
+            SliderValue = _player.Position.TotalSeconds; // Обновляем значение слайдера
+            OnPropertyChanged(nameof(SliderTime)); // Уведомляем об изменении времени
+            OnPropertyChanged(nameof(SliderLastTime)); // Уведомляем об изменении времени
+
+        }
+        private void CreateTimer()
+        {
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+        }
+
+        private void OnPlayPauseCommand() 
+        {
+            if (!_playStatus)
+            {
+                _player.Play();
+                _playStatus = true;
+                _timer.Start();
+            }
+            else
+            {
+                _player.Pause();
+               _playStatus = false;
+                _timer.Stop();
+            }
+        }
+        private void OnLikePressCommand()
+        {
+            if (ImageLikeSource == "image/like.png")
+                ImageLikeSource = "image/filledLike.png";
+            else
+                ImageLikeSource = "image/like.png";
+        }
+        private void OnVolPressCommand()
+        {
+            if (ImageVolSource == "image/vol.png")
+            {
+                _player.IsMuted = true;
+                ImageVolSource = "image/volmute.png";
+            }
+            else
+            {
+                _player.IsMuted = false;
+                ImageVolSource = "image/vol.png";
+            }
+        }
+        private void OnProfileCommand()
+        {
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+            UserPage userPage = new UserPage(_mainViewModel); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
+            pageSwitcher.Content = userPage;
+        }
+        private void OnLibraryCommand()
+        {
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+            LibraryPage libraryPage = new LibraryPage(_mainViewModel);
+            pageSwitcher.Content = libraryPage;
+        }
+        private void OnMyLikeCommand()
+        {
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+            MyLikePage myLikePage = new MyLikePage(_mainViewModel);
+            pageSwitcher.Content = myLikePage;
+        }
+
+        public BitmapImage AlbumCover
+        {
+            get => albumCover;
+            set
+            {
+                albumCover = value;
+                OnPropertyChanged(nameof(AlbumCover));
+            }
+        }
+        public string ImageLikeSource
+        {
+            get { return _mainViewModel.ImageLikeSource; }
+            set
+            {
+                _mainViewModel.ImageLikeSource = value;
+                OnPropertyChanged(nameof(ImageLikeSource));
+            }
+        }
+        public string ImageVolSource
+        {
+            get { return _mainViewModel.ImageVolSource; }
+            set
+            {
+                _mainViewModel.ImageVolSource = value;
+                OnPropertyChanged(nameof(ImageVolSource));
+            }
+        }
+        public decimal Volume
+        {
+            get { return (decimal)_player.Volume; }
+            set
+            {
+                _player.Volume = (double)value;
+                OnPropertyChanged(nameof(Volume));
+                //автоматическое возвращение звука
+                if (value == 0)
+                {
+                    _player.IsMuted = true;
+                    ImageVolSource = "image/volmute.png";
+                }
+                else
+                {
+                    _player.IsMuted = false;
+                    ImageVolSource = "image/vol.png";
+                }
+            }
+        }
+        public double MaxSliderValue
+        {
+            get => _maxSliderValue;
+            set
+            {
+                _maxSliderValue = value;
+                OnPropertyChanged(nameof(MaxSliderValue));
+            }
+        }
+        public double SliderValue
+        {
+            get
+            {
+                return _sliderValue;
+            }
+
+            set
+            {
+                if (_sliderValue != value)
+                {
+                    _sliderValue = value;
+                    OnPropertyChanged(nameof(SliderValue));
+                    _player.Position = TimeSpan.FromSeconds(_sliderValue);
+                }
+
+            }
+        }
+        public string SliderTime
+        {
+            get
+            {
+                int minutes = (int)(SliderValue / 60);
+                int seconds = (int)(SliderValue % 60);
+                return $"{minutes:D2}:{seconds:D2}"; // Форматируем как "мм:сс"
+            }
+        }
+
+        public string SliderLastTime
+        {
+            get
+            {
+                double time = (MaxSliderValue - SliderValue);
+                int minutes = (int)(time / 60);
+                int seconds = (int)(time % 60);
+                return $"{minutes:D2}:{seconds:D2}"; // Форматируем как "мм:сс"
+            }
+        }
+
+    }
+}
