@@ -21,49 +21,69 @@ namespace TrueSound.ViewModel
 {
     public class PlayerViewModel: BaseViewModel
     {
-        private MainViewModel _mainViewModel;
+        private PlayerModel _m;
         private MediaPlayer _player;
         private BitmapImage albumCover;
-        private bool _playStatus { get; set; }=false;
         public DelegateCommand LikePressCommand { get; }
         public DelegateCommand VolPressCommand { get; }
         public DelegateCommand PlayPauseCommand { get; }
+        public DelegateCommand ForwardCommand { get; }
+        public DelegateCommand BackCommand { get; }
+        private bool _playStatus { get; set; }=false;
         private double _sliderValue;
         private double _maxSliderValue;
         private DispatcherTimer _timer;
 
-        public PlayerViewModel() { }
-        public PlayerViewModel(MainViewModel vm)
-        { 
-            _mainViewModel = vm;
-            ImageLikeSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
-            ImageVolSource = "image/vol.png";
-            LikePressCommand = new DelegateCommand(OnLikePressCommand);
-            VolPressCommand = new DelegateCommand(OnVolPressCommand);
-            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
-        }
-        public PlayerViewModel(MainViewModel vm, string source = "audiofile/Dance_Of_The_Dream_Man.mp3") //конструктор для перехода из поисковика
+        public PlayerViewModel() 
         {
-            _mainViewModel = vm;
+            _m = new PlayerModel();
             _player = new MediaPlayer();
-            //_player.Open(new Uri(source, UriKind.Relative));
-            _player.Open(new Uri("Dance_Of_The_Dream_Man.mp3", UriKind.Absolute));
-            //_player.Play();
-            LoadAlbumCover(source);
-            ImageLikeSource = "image/like.png";
-            ImageVolSource = "image/vol.png";
             LikePressCommand = new DelegateCommand(OnLikePressCommand);
             VolPressCommand = new DelegateCommand(OnVolPressCommand);
             PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
-            IsMax(); //ликвидировать
-            CreateTimer();
         }
-
-
+        //public PlayerViewModel(MainViewModel vm)
+        //{ 
+        //    _mainViewModel = vm;
+        //    ImageLikeSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
+        //    ImageVolSource = "image/vol.png";
+        //    LikePressCommand = new DelegateCommand(OnLikePressCommand);
+        //    VolPressCommand = new DelegateCommand(OnVolPressCommand);
+        //    PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+        //}
+        public PlayerViewModel(int trackNum=0) //конструктор, если трек не играет
+        {
+           
+            _m = new PlayerModel();
+            _player = new MediaPlayer();
+            SetPlayer(trackNum);
+            //_player.Play();
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+            ForwardCommand = new DelegateCommand(OnForwardCommand);
+            BackCommand = new DelegateCommand(OnBackCommand);
+        }
+        //public PlayerViewModel(int trackNum, DispatcherTimer timer) //конструктор, если трек играет
+        //{
+        //    _m = new PlayerModel();
+        //    _player = new MediaPlayer();
+        //    LikePressCommand = new DelegateCommand(OnLikePressCommand);
+        //    VolPressCommand = new DelegateCommand(OnVolPressCommand);
+        //    PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+        //}
+        
+        private void SetPlayer(int trackNum)
+        {
+            _player.Open(new Uri(TrackList[trackNum], UriKind.Relative));
+            IsMax();
+            CreateTimer();
+            LoadAlbumCover(TrackList[trackNum]);
+        }
         private void LoadAlbumCover(string filePath)
         {
 
-            var file = TagLib.File.Create("../../../" + filePath);
+            var file = TagLib.File.Create(filePath);
             if (file.Tag.Pictures.Length > 0)
             {
                 var picture = file.Tag.Pictures[0];
@@ -83,7 +103,6 @@ namespace TrueSound.ViewModel
                 AlbumCover = new BitmapImage(new Uri("image/vinyl.png", UriKind.Relative));
             }
         }        
-        
         public void IsMax()
         { 
             //Обработчик, проверяющий, открыт ли файл
@@ -92,11 +111,9 @@ namespace TrueSound.ViewModel
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-
             SliderValue = _player.Position.TotalSeconds; // Обновляем значение слайдера
             OnPropertyChanged(nameof(SliderTime)); // Уведомляем об изменении времени
             OnPropertyChanged(nameof(SliderLastTime)); // Уведомляем об изменении времени
-
         }
         private void CreateTimer()
         {
@@ -105,6 +122,16 @@ namespace TrueSound.ViewModel
             _timer.Tick += Timer_Tick;
         }
 
+        private void OnBackCommand()
+        {
+            _player.Close();
+            if (trackNum>0)
+                trackNum--;
+            else
+                trackNum = TrackList.Count()-1;
+            SetPlayer(trackNum);
+            _player.Play();
+        }
         private void OnPlayPauseCommand() 
         {
             if (!_playStatus)
@@ -120,10 +147,20 @@ namespace TrueSound.ViewModel
                 _timer.Stop();
             }
         }
+        private void OnForwardCommand()
+        {
+            _player.Close();
+            if (TrackList.Count - 1 > trackNum)
+                trackNum++;
+            else
+                trackNum = 0;
+            SetPlayer(trackNum);
+            _player.Play();
+        }
         private void OnLikePressCommand()
         {
             if (ImageLikeSource == "image/like.png")
-                ImageLikeSource = "image/filledLike.png";
+                ImageLikeSource = "image/filledlike.png";
             else
                 ImageLikeSource = "image/like.png";
         }
@@ -140,28 +177,42 @@ namespace TrueSound.ViewModel
                 ImageVolSource = "image/vol.png";
             }
         }
-        private void OnProfileCommand()
-        {
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
-            UserPage userPage = new UserPage(_mainViewModel); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
-            pageSwitcher.Content = userPage;
-        }
-        private void OnLibraryCommand()
-        {
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
-            LibraryPage libraryPage = new LibraryPage(_mainViewModel);
-            pageSwitcher.Content = libraryPage;
-        }
-        private void OnMyLikeCommand()
-        {
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
-            MyLikePage myLikePage = new MyLikePage(_mainViewModel);
-            pageSwitcher.Content = myLikePage;
-        }
+        //private void OnProfileCommand()
+        //{
+        //    var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+        //    pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+        //    UserPage userPage = new UserPage(_mainViewModel); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
+        //    pageSwitcher.Content = userPage;
+        //}
+        //private void OnLibraryCommand()
+        //{
+        //    var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+        //    pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+        //    LibraryPage libraryPage = new LibraryPage(_mainViewModel);
+        //    pageSwitcher.Content = libraryPage;
+        //}
+        //private void OnMyLikeCommand()
+        //{
+        //    var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+        //    pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+        //    MyLikePage myLikePage = new MyLikePage(_mainViewModel);
+        //    pageSwitcher.Content = myLikePage;
+        //}
 
+        public int trackNum
+        {
+
+            get => _m.trackNum;
+
+            set => _m.trackNum = value;
+        }
+        public List<string> TrackList
+        {
+            get => _m.AllTrackPaths;
+
+            set => _m.AllTrackPaths = value;
+
+        }
         public BitmapImage AlbumCover
         {
             get => albumCover;
@@ -173,19 +224,19 @@ namespace TrueSound.ViewModel
         }
         public string ImageLikeSource
         {
-            get { return _mainViewModel.ImageLikeSource; }
+            get { return _m.ImageLikeSource; }
             set
             {
-                _mainViewModel.ImageLikeSource = value;
+                _m.ImageLikeSource = value;
                 OnPropertyChanged(nameof(ImageLikeSource));
             }
         }
         public string ImageVolSource
         {
-            get { return _mainViewModel.ImageVolSource; }
+            get { return _m.ImageVolSource; }
             set
             {
-                _mainViewModel.ImageVolSource = value;
+                _m.ImageVolSource = value;
                 OnPropertyChanged(nameof(ImageVolSource));
             }
         }
@@ -200,12 +251,12 @@ namespace TrueSound.ViewModel
                 if (value == 0)
                 {
                     _player.IsMuted = true;
-                    ImageVolSource = "image/volmute.png";
+                    ImageVolSource = _m.ImageVolMuteSource;
                 }
                 else
                 {
                     _player.IsMuted = false;
-                    ImageVolSource = "image/vol.png";
+                    ImageVolSource = _m.ImageVolSource;
                 }
             }
         }
@@ -245,7 +296,6 @@ namespace TrueSound.ViewModel
                 return $"{minutes:D2}:{seconds:D2}"; // Форматируем как "мм:сс"
             }
         }
-
         public string SliderLastTime
         {
             get

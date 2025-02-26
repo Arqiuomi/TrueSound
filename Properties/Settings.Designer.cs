@@ -46,5 +46,17 @@ namespace TrueSound.Properties {
                 this["Password"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("image/user.png")]
+        public string UserImage {
+            get {
+                return ((string)(this["UserImage"]));
+            }
+            set {
+                this["UserImage"] = value;
+            }
+        }
     }
 }

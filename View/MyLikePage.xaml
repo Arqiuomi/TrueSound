@@ -7,8 +7,10 @@
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="400"
       Background="#FF2A3037"
-      Title="MyLikePage">
-
+      Title="MyLikePage"
+      ShowsNavigationUI="False"
+      >
+      
     <Grid>
         
     </Grid>

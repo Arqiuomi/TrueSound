@@ -61,11 +61,56 @@ namespace TrueSound.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на image/filledLike.png.
+        /// </summary>
+        internal static string FilledLikeImage {
+            get {
+                return ResourceManager.GetString("FilledLikeImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на классика,рок,поп,фанк,джаз,кантри,рэп,шансон,хип-хоп,дэнсхолл,ритм-н-блюз,народные песни.
         /// </summary>
         internal static string genre {
             get {
                 return ResourceManager.GetString("genre", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на image/like.png.
+        /// </summary>
+        internal static string LikeImage {
+            get {
+                return ResourceManager.GetString("LikeImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../../audiofile.
+        /// </summary>
+        internal static string TracksDirectory {
+            get {
+                return ResourceManager.GetString("TracksDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на image/vol.png.
+        /// </summary>
+        internal static string VolImage {
+            get {
+                return ResourceManager.GetString("VolImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на image/volmute.png.
+        /// </summary>
+        internal static string VolMuteImage {
+            get {
+                return ResourceManager.GetString("VolMuteImage", resourceCulture);
             }
         }
     }

@@ -11,6 +11,7 @@
       d:DesignHeight="600" d:DesignWidth="400"
       Title="PlayerPage"
       Background="#FF2A3037"
+      ShowsNavigationUI="False"
       >
     <Page.Resources>
         <Style x:Key="BrdrStyle" TargetType="Border">
@@ -31,7 +32,6 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
-        
         <Style x:Key="BtnStyle" TargetType="Button">
         </Style>
 
@@ -111,6 +111,7 @@
             <Button x:Name ="BackBtn"
                 Grid.Column="1" 
                 Background="Transparent"
+                Command="{Binding BackCommand}"
                     >
                 <Image Source="image/back.png"/>
             </Button>
@@ -127,9 +128,8 @@
             <Button x:Name ="ForwardButton"
                 Grid.Column="3" 
                 Background="Transparent"
-                Command="{Binding }" 
+                Command="{Binding ForwardCommand}" 
                 >
-                    <!--status - bool тип, который изменяется при нажатии--> 
                 <Image Source="image/forward.png"/>
             </Button>
 

@@ -120,4 +120,19 @@
   <data name="genre" xml:space="preserve">
     <value>классика,рок,поп,фанк,джаз,кантри,рэп,шансон,хип-хоп,дэнсхолл,ритм-н-блюз,народные песни</value>
   </data>
+  <data name="LikeImage" xml:space="preserve">
+    <value>image/like.png</value>
+  </data>
+  <data name="VolImage" xml:space="preserve">
+    <value>image/vol.png</value>
+  </data>
+  <data name="VolMuteImage" xml:space="preserve">
+    <value>image/volmute.png</value>
+  </data>
+  <data name="FilledLikeImage" xml:space="preserve">
+    <value>image/filledLike.png</value>
+  </data>
+  <data name="TracksDirectory" xml:space="preserve">
+    <value>../../../audiofile</value>
+  </data>
 </root>

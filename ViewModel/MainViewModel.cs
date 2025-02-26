@@ -31,28 +31,27 @@ namespace TrueSound.ViewModel
             MyLikeCommand = new DelegateCommand(OnMyLikeCommand);
             SearchCommand = new DelegateCommand(OnSearchCommand);
             SearchFocusCommand = new DelegateCommand(OnSearchFocusCommand);
+            //UserImage = "View/image/user.png";
         }
 
 
         private void OnProfileCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             UserPage userPage = new UserPage(this); //передали тот самый объект vm из конструктора ; создать конструктор для vm юзера
             pageSwitcher.Content = userPage;
         }
         private void OnLibraryCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
+            //pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; 
             LibraryPage libraryPage = new LibraryPage(this);
             pageSwitcher.Content = libraryPage;
         }
         private void OnPlayerCommand()
         {
-            PlayerViewModel player = new PlayerViewModel(this, "audiofile/Dance_Of_The_Dream_Man.mp3"); //string тут быть не должно!!!
+            PlayerViewModel player = new PlayerViewModel(0); //string тут быть не должно!!! сюда номер трека из списка!
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             PlayerPage playerPage = new PlayerPage(player);
             pageSwitcher.Content = playerPage;
         }
@@ -60,7 +59,6 @@ namespace TrueSound.ViewModel
         private void OnMyLikeCommand()
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden;
             MyLikePage myLikePage = new MyLikePage(this);
             pageSwitcher.Content = myLikePage;
         }
@@ -81,7 +79,6 @@ namespace TrueSound.ViewModel
                 OnPropertyChanged(nameof(Name));
             }
         }
-
         public string Search
         {
             get { return _main.Search; }
@@ -92,25 +89,15 @@ namespace TrueSound.ViewModel
             }
         }
 
-        public string ImageLikeSource
+        public string UserImage
         {
-            get { return _main.ImageLikeSource; }
-            set
-            {
-                _main.ImageLikeSource = value;
-                OnPropertyChanged(nameof(ImageLikeSource));
+            get
+            { return _main.ImageUserSource; }
+         
+            set 
+            {_main.ImageUserSource = value;
+                OnPropertyChanged(nameof(UserImage));
             }
         }
-
-        public string ImageVolSource
-        {
-            get { return _main.ImageVolSource; }
-            set
-            {
-                _main.ImageVolSource = value;
-                OnPropertyChanged(nameof(ImageVolSource));
-            }
-        }
-
     }
 }

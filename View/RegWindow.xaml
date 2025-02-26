@@ -10,7 +10,9 @@
         ResizeMode="NoResize"
         Title="RegWindow" Height="600" Width="400"
         Name="RegW"
-        Background="#FF2A3037">
+        Background="#FF2A3037"
+        >
+    
     <Window.Resources>
 
         <Style TargetType="TextBlock">

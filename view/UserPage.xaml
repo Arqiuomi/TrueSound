@@ -86,7 +86,8 @@
             <Ellipse Grid.Column="1"
                      Stroke="Gray" Margin="93,14,92,10" >
                 <Ellipse.Fill>
-                    <ImageBrush ImageSource="/view/user.png" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="{Binding UserImage, UpdateSourceTrigger=PropertyChanged}" Stretch="UniformToFill"/>
+                    <!--<ImageBrush ImageSource="image/user.png" Stretch="UniformToFill"/>-->
                 </Ellipse.Fill>
             </Ellipse>
         </Grid>
