@@ -208,9 +208,9 @@ namespace TrueSound.ViewModel
         }
         public List<string> TrackList
         {
-            get => _m.AllTrackPaths;
+            get => _m.AlbumPaths;
 
-            set => _m.AllTrackPaths = value;
+            set => _m.AlbumPaths = value;
 
         }
         public BitmapImage AlbumCover

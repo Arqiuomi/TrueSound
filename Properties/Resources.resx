@@ -132,7 +132,7 @@
   <data name="FilledLikeImage" xml:space="preserve">
     <value>image/filledLike.png</value>
   </data>
-  <data name="TracksDirectory" xml:space="preserve">
+  <data name="AlbumsDirectory" xml:space="preserve">
     <value>../../../audiofile</value>
   </data>
 </root>

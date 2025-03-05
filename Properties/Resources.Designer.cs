@@ -90,9 +90,9 @@ namespace TrueSound.Properties {
         /// <summary>
         ///   Ищет локализованную строку, похожую на ../../../audiofile.
         /// </summary>
-        internal static string TracksDirectory {
+        internal static string AlbumsDirectory {
             get {
-                return ResourceManager.GetString("TracksDirectory", resourceCulture);
+                return ResourceManager.GetString("AlbumsDirectory", resourceCulture);
             }
         }
         

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using TrueSound;
 
 namespace TrueSound.Model
 {
@@ -14,25 +15,21 @@ namespace TrueSound.Model
         public string ImageLikeSource { get; set; } = Properties.Resources.LikeImage;
         public string ImageFilledLikeSource { get; set; } = Properties.Resources.FilledLikeImage;
         public string? AlbumCover { get; set; }
-        public string? TracksDirectory { get; set; } = Properties.Resources.TracksDirectory;
-        public List<string> AllTrackPaths { get; set; }
+        public string? AlbumsDirectory { get; set; } = Properties.Resources.AlbumsDirectory;
+        public List<string> AlbumPaths { get; set; }
         public int trackNum { get; set; }
 
         public PlayerModel() 
         {
-            AllTrackPaths = GetAllFilePaths(TracksDirectory);
+            AlbumPaths = basicFuncs.GetAllFilePaths(AlbumsDirectory);
         }
 
         public PlayerModel(int trackNum)
         {
-            AllTrackPaths = GetAllFilePaths(TracksDirectory);
+            AlbumPaths = basicFuncs.GetAllFilePaths(AlbumsDirectory);
             this.trackNum = trackNum;
         }
 
-        private List<string> GetAllFilePaths(string fileDirectory)
-        {
-            return Directory.GetFiles(fileDirectory).ToList();
-        }
 
     }
 }

@@ -13,7 +13,9 @@ namespace TrueSound.Model
         public string? Password { get; set; }
         public string? ImageUserSource { get; set; } = Properties.Settings.Default.UserImage;
         public string? Search { get; set; }
-        
+
+        public string? AlbumsDirectory { get; set; } = Properties.Resources.AlbumsDirectory;
+
         public MainWindowModel() { }
         public MainWindowModel(OpenViewModel vm) 
         {

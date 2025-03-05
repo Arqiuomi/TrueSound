@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <None Remove="audiofile\Dance_Of_The_Dream_Man.mp3" />
+    <None Remove="audiofile\Sherlock Holmes\Sherlock_Theme.mp3" />
     <None Remove="audiofile\Sherlock_Theme.mp3" />
+    <None Remove="audiofile\Twin Picks\Dance_Of_The_Dream_Man.mp3" />
+    <None Remove="audiofile\Twin Picks\Twin_Peaks_Theme.mp3" />
     <None Remove="audiofile\Twin_Peaks_Theme.mp3" />
     <None Remove="nots.png" />
     <None Remove="View\image\back.png" />
@@ -30,7 +33,10 @@
 
   <ItemGroup>
     <Resource Include="audiofile\Dance_Of_The_Dream_Man.mp3" />
+    <Resource Include="audiofile\Sherlock Holmes\Sherlock_Theme.mp3" />
     <Resource Include="audiofile\Sherlock_Theme.mp3" />
+    <Resource Include="audiofile\Twin Picks\Dance_Of_The_Dream_Man.mp3" />
+    <Resource Include="audiofile\Twin Picks\Twin_Peaks_Theme.mp3" />
     <Resource Include="audiofile\Twin_Peaks_Theme.mp3" />
     <Resource Include="nots.png" />
   </ItemGroup>

@@ -22,6 +22,7 @@ namespace TrueSound.ViewModel
         public DelegateCommand SearchCommand { get; }
         public DelegateCommand SearchFocusCommand { get; }
 
+
         public MainViewModel(OpenViewModel vm)
         {
             _main = new MainWindowModel(vm);
@@ -45,7 +46,7 @@ namespace TrueSound.ViewModel
         {
             var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
             //pageSwitcher.NavigationUIVisibility = System.Windows.Navigation.NavigationUIVisibility.Hidden; 
-            LibraryPage libraryPage = new LibraryPage(this);
+            LibraryPage libraryPage = new LibraryPage(new LibraryViewModel(this));
             pageSwitcher.Content = libraryPage;
         }
         private void OnPlayerCommand()
