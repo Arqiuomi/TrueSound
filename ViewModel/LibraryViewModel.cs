@@ -10,6 +10,9 @@ using System.Windows;
 using TrueSound.Model;
 using System.Collections.ObjectModel;
 using System.IO;
+using TrueSound.View;
+using MaterialDesignColors;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace TrueSound.ViewModel
 {
@@ -18,14 +21,18 @@ namespace TrueSound.ViewModel
         MainViewModel _vm;
         LibraryModel _m;
         BitmapImage AlbumCover;
+        public DelegateCommand<object> AlbumPressCommand { get; set; }
+        public DelegateCommand SearchCommand { get; }
+        public DelegateCommand SearchFocusCommand { get; }
 
         public LibraryViewModel(MainViewModel vm) 
         { 
             _vm = vm;
             _m = new LibraryModel();
-
             AlbumsPanelView = new ObservableCollection<Album>(FillAlbum());
-
+            AlbumPressCommand = new DelegateCommand<object>(OnAlbumPressCommand);
+            SearchCommand = new DelegateCommand(OnSearchCommand);
+            SearchFocusCommand = new DelegateCommand(OnSearchFocusCommand);
         }
 
 
@@ -35,32 +42,52 @@ namespace TrueSound.ViewModel
                 var paths = basicFuncs.GetAllDirectoryPaths(fileDirectory);
             for (int i=0; i < paths.Count; i++)
                 paths[i] = paths[i].Remove(0, fileDirectory.Length+1);
-
             return paths;
         }
 
-        private List<ImageSource> CollectAlbumCovers(string fileDirectory)
+        private List<BitmapImage> CollectAlbumCovers(string fileDirectory)
         {
             //fileDirectory - путь на папку со всеми альбомами
 
-            var coverList = new List<ImageSource>();
+            var coverList = new List<BitmapImage>();
 
-            foreach (string AlbumPaths in basicFuncs.GetAllFilePaths(fileDirectory)) 
+            foreach (string AlbumPath in basicFuncs.GetAllDirectoryPaths(fileDirectory))
             {
-                coverList.Add(CreateImageSource("C:/Users/aelis/source/repos/TrueSound/View/image/vinyl.png"));
-                //List<string> trackPaths = basicFuncs.GetAllFilePaths(AlbumPaths);
-                //foreach (string trackPath in trackPaths)
-                //{
-                //    //должна быть отдельная ссылка на обложки альбомов
-                //    coverList.Add(CreateImageSource("image/vinyl.png"));
-                //    break;
-                //}
+                //coverList.Add(CreateImageSource("C:/Users/aelis/source/repos/TrueSound/View/image/vinyl.png"));
+
+                foreach (string trackPath in basicFuncs.GetAllFilePaths(AlbumPath))
+                {
+                    coverList.Add(new BitmapImage(new Uri(Properties.Resources.VinylImage, UriKind.Relative)));
+
+                    var file = TagLib.File.Create(trackPath);
+                    if (file.Tag.Pictures.Length > 0)
+                    {
+                        coverList[coverList.Count - 1] = FindAlbumCover(file);
+                        break;
+                    }
+                }
+                return coverList;
             }
-            return coverList;
+        }
+
+        private BitmapImage FindAlbumCover(TagLib.File file)
+        {
+                var picture = file.Tag.Pictures[0];
+                using (var stream = new MemoryStream(picture.Data.Data))
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.StreamSource = stream;
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                    return bitmap;
+                }
+
         }
 
 
-        public List<Album> FillAlbum()
+            public List<Album> FillAlbum()
         {
             var albumList = new List<Album>();
             var albumNameList = CollectAlbumNames(_m.AlbumsDirectory);
@@ -109,6 +136,8 @@ namespace TrueSound.ViewModel
         }
 
 
+
+
         //private void FillGenersList()
         ////заполняет ComboBox
         //{
@@ -142,6 +171,24 @@ namespace TrueSound.ViewModel
         //    return image;
         //}
 
+
+        private void OnAlbumPressCommand(object AlbumNum)
+        {
+            PlayerViewModel player = new PlayerViewModel(1); //вместо 0 должен быть AlbumNum !!!!
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            PlayerPage playerPage = new PlayerPage(player);
+            pageSwitcher.Content = playerPage;
+        }
+
+        private void OnSearchCommand()
+        {
+            Search = "hi"; // тут срабатывает действие поиска - отправка запроса в парсер
+        }
+        private void OnSearchFocusCommand()
+        {
+            Search = string.Empty;
+        }
+
         public ObservableCollection<Album> AlbumsPanelView
         {
             get
@@ -151,6 +198,16 @@ namespace TrueSound.ViewModel
             {
                 _m.AlbumsPanelView = value;
                 OnPropertyChanged(nameof(AlbumsPanelView));
+            }
+        }
+
+        public string Search
+        {
+            get { return _m.Search; }
+            set
+            {
+                _m.Search = value;
+                OnPropertyChanged(nameof(Search));
             }
         }
 

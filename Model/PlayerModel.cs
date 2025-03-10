@@ -17,17 +17,32 @@ namespace TrueSound.Model
         public string? AlbumCover { get; set; }
         public string? AlbumsDirectory { get; set; } = Properties.Resources.AlbumsDirectory;
         public List<string> AlbumPaths { get; set; }
-        public int trackNum { get; set; }
+        public List<string> TrackList { get; set; }
+        public int TrackNum { get; set; }
+        public int AlbumNum { get; set; }
 
         public PlayerModel() 
         {
-            AlbumPaths = basicFuncs.GetAllFilePaths(AlbumsDirectory);
+            AlbumPaths = basicFuncs.GetAllDirectoryPaths(AlbumsDirectory);
+            AlbumNum = 0;
+            TrackList = basicFuncs.GetAllFilePaths(AlbumPaths[AlbumNum]);
         }
 
-        public PlayerModel(int trackNum)
+        public PlayerModel(int albumNum)
         {
-            AlbumPaths = basicFuncs.GetAllFilePaths(AlbumsDirectory);
-            this.trackNum = trackNum;
+            AlbumPaths = basicFuncs.GetAllDirectoryPaths(AlbumsDirectory);
+            AlbumNum = albumNum;
+            TrackList = basicFuncs.GetAllFilePaths(AlbumPaths[AlbumNum]);
+
+        }
+
+        public PlayerModel(int albumNum, int trackNum)
+        {
+            AlbumPaths = basicFuncs.GetAllDirectoryPaths(AlbumsDirectory);
+            AlbumNum = albumNum;
+            TrackList = basicFuncs.GetAllFilePaths(AlbumPaths[AlbumNum]);
+            TrackNum = trackNum;
+
         }
 
 

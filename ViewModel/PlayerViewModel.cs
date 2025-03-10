@@ -42,19 +42,17 @@ namespace TrueSound.ViewModel
             VolPressCommand = new DelegateCommand(OnVolPressCommand);
             PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
         }
-        //public PlayerViewModel(MainViewModel vm)
-        //{ 
-        //    _mainViewModel = vm;
-        //    ImageLikeSource = "image/like.png"; //сюда пойдет метод, есть песня в лайках или нет
-        //    ImageVolSource = "image/vol.png";
-        //    LikePressCommand = new DelegateCommand(OnLikePressCommand);
-        //    VolPressCommand = new DelegateCommand(OnVolPressCommand);
-        //    PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
-        //}
-        public PlayerViewModel(int trackNum=0) //конструктор, если трек не играет
+        public PlayerViewModel(LibraryViewModel vm)
         {
-           
             _m = new PlayerModel();
+            _player = new MediaPlayer();
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+        }
+        public PlayerViewModel(int albumNum = 0) //конструктор, если трек не играет
+        {
+            _m = new PlayerModel(albumNum);
             _player = new MediaPlayer();
             SetPlayer(trackNum);
             //_player.Play();
@@ -64,6 +62,21 @@ namespace TrueSound.ViewModel
             ForwardCommand = new DelegateCommand(OnForwardCommand);
             BackCommand = new DelegateCommand(OnBackCommand);
         }
+        public PlayerViewModel(int albumNum = 0, int trackNum = 0) //конструктор, если трек не играет
+        {
+            _m = new PlayerModel(albumNum, trackNum);
+            _player = new MediaPlayer();
+            SetPlayer(trackNum);
+            //_player.Play();
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+            ForwardCommand = new DelegateCommand(OnForwardCommand);
+            BackCommand = new DelegateCommand(OnBackCommand);
+        }
+
+
+
         //public PlayerViewModel(int trackNum, DispatcherTimer timer) //конструктор, если трек играет
         //{
         //    _m = new PlayerModel();
@@ -72,7 +85,9 @@ namespace TrueSound.ViewModel
         //    VolPressCommand = new DelegateCommand(OnVolPressCommand);
         //    PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
         //}
-        
+
+
+
         private void SetPlayer(int trackNum)
         {
             _player.Open(new Uri(TrackList[trackNum], UriKind.Relative));
@@ -202,15 +217,15 @@ namespace TrueSound.ViewModel
         public int trackNum
         {
 
-            get => _m.trackNum;
+            get => _m.TrackNum;
 
-            set => _m.trackNum = value;
+            set => _m.TrackNum = value;
         }
         public List<string> TrackList
         {
-            get => _m.AlbumPaths;
+            get => _m.TrackList;
 
-            set => _m.AlbumPaths = value;
+            set => _m.TrackList = value;
 
         }
         public BitmapImage AlbumCover

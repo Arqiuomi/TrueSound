@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace TrueSound.Model
 {
     public class Album
     {
-        public ImageSource ImageSource { get; set; }
+        public BitmapImage ImageSource { get; set; }
         public string AlbumName { get; set; }
 
-        public Album(ImageSource imageSource, string albumName)
+        public Album(BitmapImage imageSource, string albumName)
         {
             ImageSource = imageSource;
             AlbumName = albumName;

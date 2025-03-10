@@ -45,6 +45,7 @@ namespace TrueSound.view
         }
 
 
+
         //    private void FillGenersList()
         //    //заполняет ComboBox
         //    {

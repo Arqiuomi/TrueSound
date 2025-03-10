@@ -11,7 +11,7 @@ namespace TrueSound.Model
     {
         public ObservableCollection<Album> AlbumsPanelView { get; set; }
         public string? AlbumsDirectory { get; set; } = Properties.Resources.AlbumsDirectory;
-
+        public string? Search { get; set; }
 
         public LibraryModel()
         { 

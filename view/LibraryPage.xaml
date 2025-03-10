@@ -44,7 +44,10 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
         </Style>
-        
+
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="Height" Value="70"/>
+        </Style>
         
     </Page.Resources>
 
@@ -78,11 +81,20 @@
             Background="#FF2A3037"
             Height="472" VerticalAlignment="Top" 
             Grid.Row="1"
-            ItemsSource="{Binding AlbumsPanelView, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding AlbumsPanelView, UpdateSourceTrigger=PropertyChanged}" 
             >
             <!--ItemContainerStyle="{DynamicResource albStyle}"-->
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <Button 
+                        
+                        Height="70"
+                        Command="{Binding DataContext.AlbumPressCommand , 
+                        RelativeSource={RelativeSource AncestorType=Page}}"
+                        CommandParameter="{Binding Path=SelectedIndex, 
+                        RelativeSource={RelativeSource AncestorType=ListBox}}"
+                        >
+                        <!--Style="{DynamicResource btnStyle}" почему меняет остальное? -->
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged}"
                                Style="{DynamicResource albImageStyle}"
@@ -91,7 +103,10 @@
                                Style="{DynamicResource albNameStyle}"
                                />
                     </StackPanel>
+                        
+                    </Button>
                 </DataTemplate>
+                    
             </ListBox.ItemTemplate>
         </ListBox>
     </Grid>

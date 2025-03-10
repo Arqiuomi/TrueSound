@@ -61,6 +61,15 @@ namespace TrueSound.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на ../../../audiofile.
+        /// </summary>
+        internal static string AlbumsDirectory {
+            get {
+                return ResourceManager.GetString("AlbumsDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на image/filledLike.png.
         /// </summary>
         internal static string FilledLikeImage {
@@ -88,11 +97,11 @@ namespace TrueSound.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на ../../../audiofile.
+        ///   Ищет локализованную строку, похожую на image/vinyl.png.
         /// </summary>
-        internal static string AlbumsDirectory {
+        internal static string VinylImage {
             get {
-                return ResourceManager.GetString("AlbumsDirectory", resourceCulture);
+                return ResourceManager.GetString("VinylImage", resourceCulture);
             }
         }
         

@@ -135,4 +135,7 @@
   <data name="AlbumsDirectory" xml:space="preserve">
     <value>../../../audiofile</value>
   </data>
+  <data name="VinylImage" xml:space="preserve">
+    <value>image/vinyl.png</value>
+  </data>
 </root>
