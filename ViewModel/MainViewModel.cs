@@ -9,6 +9,7 @@ using TrueSound.view;
 using TrueSound.View;
 using TrueSound.model;
 using TrueSound.Model;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 namespace TrueSound.ViewModel
 {
@@ -19,8 +20,8 @@ namespace TrueSound.ViewModel
         public DelegateCommand LibraryCommand { get; }
         public DelegateCommand PlayerCommand { get; }
         public DelegateCommand MyLikeCommand { get; }
-        public DelegateCommand SearchCommand { get; }
-        public DelegateCommand SearchFocusCommand { get; }
+        public MediaPlayer player = new MediaPlayer(); //честно пытался вынести в модель
+
 
 
         public MainViewModel(OpenViewModel vm)
@@ -30,9 +31,8 @@ namespace TrueSound.ViewModel
             LibraryCommand = new DelegateCommand(OnLibraryCommand);
             PlayerCommand = new DelegateCommand(OnPlayerCommand);
             MyLikeCommand = new DelegateCommand(OnMyLikeCommand);
-            SearchCommand = new DelegateCommand(OnSearchCommand);
-            SearchFocusCommand = new DelegateCommand(OnSearchFocusCommand);
             //UserImage = "View/image/user.png";
+            
         }
 
 
@@ -50,11 +50,21 @@ namespace TrueSound.ViewModel
             pageSwitcher.Content = libraryPage;
         }
         private void OnPlayerCommand()
+
         {
-            PlayerViewModel player = new PlayerViewModel(0); //string тут быть не должно!!! сюда номер трека из списка!
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            PlayerPage playerPage = new PlayerPage(player);
-            pageSwitcher.Content = playerPage;
+            PlayerViewModel playerVM;
+            if (player.Source != null)
+            {
+                 playerVM = new PlayerViewModel(ref player, player.Position);
+            } 
+            else
+            {
+                 playerVM = new PlayerViewModel(ref player, 0, 0);
+            }
+                var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+                PlayerPage playerPage = new PlayerPage(playerVM);
+                pageSwitcher.Content = playerPage;
+
         }
 
         private void OnMyLikeCommand()
@@ -63,14 +73,7 @@ namespace TrueSound.ViewModel
             MyLikePage myLikePage = new MyLikePage(this);
             pageSwitcher.Content = myLikePage;
         }
-        private void OnSearchCommand()
-        {
-            Search = "hi"; // тут срабатывает действие поиска - отправка запроса в парсер
-        }
-        private void OnSearchFocusCommand()
-        {
-            Search = string.Empty;
-        }
+
         public string Name
         {
             get { return _main.Name; }
@@ -78,15 +81,6 @@ namespace TrueSound.ViewModel
             {
                 _main.Name = value;
                 OnPropertyChanged(nameof(Name));
-            }
-        }
-        public string Search
-        {
-            get { return _main.Search; }
-            set
-            {
-                _main.Search = value;
-                OnPropertyChanged(nameof(Search));
             }
         }
 

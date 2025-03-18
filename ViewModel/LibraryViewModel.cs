@@ -21,7 +21,7 @@ namespace TrueSound.ViewModel
         MainViewModel _vm;
         LibraryModel _m;
         BitmapImage AlbumCover;
-        public DelegateCommand<object> AlbumPressCommand { get; set; }
+        public DelegateCommand AlbumPressCommand { get; set; }
         public DelegateCommand SearchCommand { get; }
         public DelegateCommand SearchFocusCommand { get; }
 
@@ -30,7 +30,7 @@ namespace TrueSound.ViewModel
             _vm = vm;
             _m = new LibraryModel();
             AlbumsPanelView = new ObservableCollection<Album>(FillAlbum());
-            AlbumPressCommand = new DelegateCommand<object>(OnAlbumPressCommand);
+            AlbumPressCommand = new DelegateCommand(OnAlbumPressCommand);
             SearchCommand = new DelegateCommand(OnSearchCommand);
             SearchFocusCommand = new DelegateCommand(OnSearchFocusCommand);
         }
@@ -66,9 +66,31 @@ namespace TrueSound.ViewModel
                         break;
                     }
                 }
-                return coverList;
             }
+                return coverList;
         }
+
+
+        private void OnAlbumPressCommand()
+        {
+            var t = AlbumIndex;
+            PlayerViewModel playerVM = new PlayerViewModel(ref _vm.player, AlbumIndex, 0); //вместо 0 должен быть AlbumNum !!!!
+            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
+            PlayerPage playerPage = new PlayerPage(playerVM);
+            pageSwitcher.Content = playerPage;
+        }
+
+        private void OnSearchCommand()
+        {
+            Search = "hi"; // тут срабатывает действие поиска - отправка запроса в парсер
+        }
+        private void OnSearchFocusCommand()
+        {
+            Search = string.Empty;
+        }
+
+
+
 
         private BitmapImage FindAlbumCover(TagLib.File file)
         {
@@ -85,7 +107,6 @@ namespace TrueSound.ViewModel
                 }
 
         }
-
 
             public List<Album> FillAlbum()
         {
@@ -172,22 +193,7 @@ namespace TrueSound.ViewModel
         //}
 
 
-        private void OnAlbumPressCommand(object AlbumNum)
-        {
-            PlayerViewModel player = new PlayerViewModel(1); //вместо 0 должен быть AlbumNum !!!!
-            var pageSwitcher = (Frame)Application.Current.Windows[0].FindName("PageSwitcher");
-            PlayerPage playerPage = new PlayerPage(player);
-            pageSwitcher.Content = playerPage;
-        }
 
-        private void OnSearchCommand()
-        {
-            Search = "hi"; // тут срабатывает действие поиска - отправка запроса в парсер
-        }
-        private void OnSearchFocusCommand()
-        {
-            Search = string.Empty;
-        }
 
         public ObservableCollection<Album> AlbumsPanelView
         {
@@ -210,6 +216,22 @@ namespace TrueSound.ViewModel
                 OnPropertyChanged(nameof(Search));
             }
         }
+        public int AlbumIndex
+        { 
+             get
+            {  
+                return _m.albumIndex; 
+            }
+            
+            set
+            {
+                _m.albumIndex = value;
+                OnPropertyChanged(nameof(AlbumIndex));
+            }
+        
+        }
+
+
 
     }
 }

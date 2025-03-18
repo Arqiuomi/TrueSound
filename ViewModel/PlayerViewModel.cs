@@ -16,6 +16,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using TagLib.Mpeg;
 using System.Windows.Threading;
+using System.Numerics;
 
 namespace TrueSound.ViewModel
 {
@@ -42,14 +43,7 @@ namespace TrueSound.ViewModel
             VolPressCommand = new DelegateCommand(OnVolPressCommand);
             PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
         }
-        public PlayerViewModel(LibraryViewModel vm)
-        {
-            _m = new PlayerModel();
-            _player = new MediaPlayer();
-            LikePressCommand = new DelegateCommand(OnLikePressCommand);
-            VolPressCommand = new DelegateCommand(OnVolPressCommand);
-            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
-        }
+     
         public PlayerViewModel(int albumNum = 0) //конструктор, если трек не играет
         {
             _m = new PlayerModel(albumNum);
@@ -62,12 +56,24 @@ namespace TrueSound.ViewModel
             ForwardCommand = new DelegateCommand(OnForwardCommand);
             BackCommand = new DelegateCommand(OnBackCommand);
         }
-        public PlayerViewModel(int albumNum = 0, int trackNum = 0) //конструктор, если трек не играет
+        public PlayerViewModel(ref MediaPlayer player, int albumNum = 0, int trackNum = 0) //конструктор, если трек играет
         {
             _m = new PlayerModel(albumNum, trackNum);
-            _player = new MediaPlayer();
-            SetPlayer(trackNum);
+            _player = player;
+            SetPlayer(albumNum);
             //_player.Play();
+            LikePressCommand = new DelegateCommand(OnLikePressCommand);
+            VolPressCommand = new DelegateCommand(OnVolPressCommand);
+            PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
+            ForwardCommand = new DelegateCommand(OnForwardCommand);
+            BackCommand = new DelegateCommand(OnBackCommand);
+        }
+
+        public PlayerViewModel(ref MediaPlayer player, TimeSpan time) //конструктор, если трек играет
+        {
+            _player = player;
+            _m = new PlayerModel(_player.Source.ToString());
+            UpdatePlayer(time);
             LikePressCommand = new DelegateCommand(OnLikePressCommand);
             VolPressCommand = new DelegateCommand(OnVolPressCommand);
             PlayPauseCommand = new DelegateCommand(OnPlayPauseCommand);
@@ -88,13 +94,21 @@ namespace TrueSound.ViewModel
 
 
 
-        private void SetPlayer(int trackNum)
+        private void SetPlayer(int albumNum)
         {
             _player.Open(new Uri(TrackList[trackNum], UriKind.Relative));
+            //var t = _player;
             IsMax();
             CreateTimer();
             LoadAlbumCover(TrackList[trackNum]);
         }
+        private void UpdatePlayer(TimeSpan time)
+        {
+            LoadAlbumCover(_player.Source.ToString());
+            UpdateTimer(time);
+            IsMax(); 
+        }
+
         private void LoadAlbumCover(string filePath)
         {
 
@@ -119,10 +133,14 @@ namespace TrueSound.ViewModel
             }
         }        
         public void IsMax()
-        { 
+        {
             //Обработчик, проверяющий, открыт ли файл
-            _player.MediaOpened += (s, e) =>
-               MaxSliderValue = _player.NaturalDuration.TimeSpan.TotalSeconds;
+            //_player.MediaOpened += (s, e) =>
+            //var t = _player.NaturalDuration;
+            //var ht = t.TimeSpan;
+            //MaxSliderValue = ht.TotalSeconds;
+            MaxSliderValue = _player.NaturalDuration.TimeSpan.TotalSeconds;
+
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
@@ -134,6 +152,13 @@ namespace TrueSound.ViewModel
         {
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+        }
+
+        private void UpdateTimer(TimeSpan time)
+        {
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(time.TotalSeconds);
             _timer.Tick += Timer_Tick;
         }
 

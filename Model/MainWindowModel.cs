@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using TrueSound.ViewModel;
 
 namespace TrueSound.Model
@@ -12,7 +13,9 @@ namespace TrueSound.Model
         public string? Name { get; set; }
         public string? Password { get; set; }
         public string? ImageUserSource { get; set; } = Properties.Settings.Default.UserImage;
-        public string? Search { get; set; }
+        public MediaPlayer Player { get; set; }
+
+
 
         public string? AlbumsDirectory { get; set; } = Properties.Resources.AlbumsDirectory;
 

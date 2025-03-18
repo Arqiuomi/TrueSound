@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using TrueSound;
+using System.Windows.Media;
 
 namespace TrueSound.Model
 {
@@ -20,6 +21,7 @@ namespace TrueSound.Model
         public List<string> TrackList { get; set; }
         public int TrackNum { get; set; }
         public int AlbumNum { get; set; }
+        public MediaPlayer Player { get; set; }
 
         public PlayerModel() 
         {
@@ -36,12 +38,27 @@ namespace TrueSound.Model
 
         }
 
+        public PlayerModel(string albumPath)
+        {
+            TrackList = basicFuncs.GetAllFilePaths(Path.GetDirectoryName(albumPath));
+
+        }
+
         public PlayerModel(int albumNum, int trackNum)
         {
             AlbumPaths = basicFuncs.GetAllDirectoryPaths(AlbumsDirectory);
             AlbumNum = albumNum;
             TrackList = basicFuncs.GetAllFilePaths(AlbumPaths[AlbumNum]);
             TrackNum = trackNum;
+
+        }
+                public PlayerModel(int albumNum, int trackNum, MediaPlayer player)
+        {
+            AlbumPaths = basicFuncs.GetAllDirectoryPaths(AlbumsDirectory);
+            AlbumNum = albumNum;
+            TrackList = basicFuncs.GetAllFilePaths(AlbumPaths[AlbumNum]);
+            TrackNum = trackNum;
+            Player = player;
 
         }
 
